@@ -1764,3 +1764,90 @@
 23:09:09.827 [Thread-4] INFO  Application.MainFrame - �յ����� 02 03 04 00 00 1C 45 
 23:09:10.618 [AWT-EventQueue-0] INFO  tools.SerialCommTools - //./COM6 �������ݳɹ� 02 03 00 03 00 02 34 38 
 23:09:10.657 [Thread-4] INFO  Application.MainFrame - �յ����� 02 03 06 60 13 ED D3 53 FB 
+23:22:19.650 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:22:19.655 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:22:22.867 [AWT-EventQueue-0] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:22:22.867 [AWT-EventQueue-0] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:22:25.480 [AWT-EventQueue-0] INFO  tools.SerialCommTools - 打开串口成功，串口号 COM6 波特率 38400 数据位 88 停止位 1 校验位 无
+23:22:26.416 [AWT-EventQueue-0] INFO  tools.SerialCommTools - //./COM6 发送数据成功 02 03 00 01 00 01 D5 F9 
+23:22:26.449 [Thread-3] INFO  Application.MainFrame - 收到数据 02 03 04 00 09 DC 43 
+23:22:27.171 [AWT-EventQueue-0] INFO  tools.SerialCommTools - //./COM6 发送数据成功 02 03 00 02 00 01 25 F9 
+23:22:27.198 [Thread-3] INFO  Application.MainFrame - 收到数据 02 03 04 00 00 1C 45 
+23:25:20.426 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:25:20.431 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:26:31.505 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:26:31.510 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:26:46.900 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:26:46.905 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:27:17.584 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:27:17.589 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:27:53.085 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:27:53.090 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:28:15.905 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:28:15.910 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:28:27.607 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:28:27.612 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:28:42.587 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:28:42.594 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:29:10.195 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:29:10.200 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:29:31.385 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:29:31.390 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:29:59.649 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:29:59.654 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:30:11.575 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:30:11.580 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:30:27.503 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:30:27.508 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:31:29.107 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:31:29.112 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:31:43.414 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:31:43.419 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:31:55.034 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:31:55.039 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:32:08.287 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:32:08.292 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:32:23.573 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:32:23.579 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:32:37.180 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:32:37.185 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:33:02.210 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:33:02.215 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:33:17.290 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:33:17.295 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:33:32.156 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:33:32.162 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:33:52.037 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:33:52.046 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:34:19.083 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:34:19.089 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:34:33.583 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:34:33.589 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:34:48.803 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:34:48.808 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:35:03.639 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:35:03.644 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:35:21.213 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:35:21.218 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:35:33.664 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:35:33.669 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:35:48.838 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:35:48.845 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:56:23.780 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:56:23.787 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:56:33.623 [AWT-EventQueue-0] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+23:56:33.623 [AWT-EventQueue-0] INFO  tools.SerialCommTools - 发现串口，串口号 COM6
+23:56:36.042 [AWT-EventQueue-0] INFO  tools.SerialCommTools - 打开串口成功，串口号 COM6 波特率 38400 数据位 88 停止位 1 校验位 无
+23:56:38.172 [AWT-EventQueue-0] INFO  tools.SerialCommTools - //./COM6 发送数据成功 02 03 00 01 00 01 D5 F9 
+23:56:38.209 [Thread-3] INFO  Application.MainFrame - 收到数据 02 03 04 00 09 DC 43 
+23:56:38.893 [AWT-EventQueue-0] INFO  tools.SerialCommTools - //./COM6 发送数据成功 02 03 00 01 00 01 D5 F9 
+23:56:38.927 [Thread-3] INFO  Application.MainFrame - 收到数据 02 03 04 00 09 DC 43 
+23:56:39.429 [AWT-EventQueue-0] INFO  tools.SerialCommTools - //./COM6 发送数据成功 02 03 00 01 00 01 D5 F9 
+23:56:39.470 [Thread-3] INFO  Application.MainFrame - 收到数据 02 03 04 00 09 DC 43 
+23:56:39.827 [AWT-EventQueue-0] INFO  tools.SerialCommTools - //./COM6 发送数据成功 02 03 00 01 00 01 D5 F9 
+23:56:39.853 [Thread-3] INFO  Application.MainFrame - 收到数据 02 03 04 00 09 DC 43 
+23:56:40.270 [AWT-EventQueue-0] INFO  tools.SerialCommTools - //./COM6 发送数据成功 02 03 00 01 00 01 D5 F9 
+23:56:40.300 [Thread-3] INFO  Application.MainFrame - 收到数据 02 03 04 00 09 DC 43 
+23:56:40.567 [AWT-EventQueue-0] INFO  tools.SerialCommTools - //./COM6 发送数据成功 02 03 00 01 00 01 D5 F9 
+23:56:40.604 [Thread-3] INFO  Application.MainFrame - 收到数据 02 03 04 00 09 DC 43 
+23:56:45.982 [AWT-EventQueue-0] INFO  tools.SerialCommTools - 关闭串口 //./COM6 成功

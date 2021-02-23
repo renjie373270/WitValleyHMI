@@ -17,6 +17,7 @@ import javax.swing.event.PopupMenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -33,7 +34,7 @@ public class MainFrame extends JFrame {
     private static final Logger log = LoggerFactory.getLogger(MainFrame.class);
 
     //整体窗口
-    public final int WIDTH = 420;
+    public final int WIDTH = 1200;
     public final int HEIGHT = 800;
     //串口设置区域
     private List<String> serialPortNameList = Lists.newArrayList();
@@ -92,6 +93,10 @@ public class MainFrame extends JFrame {
     private JButton readPowerTimestampButton = new JButton("读取");
     private JButton writePowerTimestampButton = new JButton("写入");
     private JButton unlockPowerButton = new JButton("出厂解锁");
+    //日志
+    private JPanel logPanel = new JPanel();
+    private JTextArea logTextArea = new JTextArea();
+    JScrollPane logScrollPane = new JScrollPane(logTextArea);
 
     /**
      * 整体窗口
@@ -243,6 +248,19 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(unlockInverterButton);
     }
 
+    private void initLogArea() {
+        logPanel.setBorder(BorderFactory.createTitledBorder("日志"));
+        logPanel.setBounds(420, 10, 770, 750);
+        logPanel.setLayout(null);
+        add(logPanel);
+
+        logScrollPane.setBounds(10, 20, 750, 720);
+        logScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        logPanel.add(logScrollPane);
+
+        logTextArea.setLineWrap(true);
+        logTextArea.setBounds(10, 20, 750, 720);
+    }
 
     /**
      * 串口号显示区域
@@ -282,6 +300,7 @@ public class MainFrame extends JFrame {
 
         initInverterOperateArea();
         initPowerOperateArea();
+        initLogArea();
     }
 
     Consumer<Boolean> consumerButtonDisplay = trueFalse -> {
@@ -780,9 +799,18 @@ public class MainFrame extends JFrame {
         initListener();
     }
 
+    private void initLogOutputStream() {
+
+    }
+
     public static void main(String[] args) {
         MainFrame frame = new MainFrame();
         frame.initAllComponents();
+
+        ConsoleStream consoleStream = new ConsoleStream(frame.logTextArea);
+        PrintStream printStream = new PrintStream(consoleStream);
+        System.setOut(printStream);
+
         frame.setVisible(true);
     }
 }
