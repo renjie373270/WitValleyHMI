@@ -1,0 +1,9 @@
+11:46:27.219 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+11:46:28.983 [AWT-EventQueue-0] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+11:46:30.306 [AWT-EventQueue-0] INFO  tools.SerialCommTools - 打开串口成功，串口号 COM1 波特率 9600 数据位 88 停止位 1 校验位 无
+11:46:31.153 [AWT-EventQueue-0] INFO  tools.SerialCommTools - 关闭串口 //./COM1 成功
+11:47:22.661 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+11:49:55.045 [main] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+11:49:56.657 [AWT-EventQueue-0] INFO  tools.SerialCommTools - 发现串口，串口号 COM1
+11:49:58.190 [AWT-EventQueue-0] INFO  tools.SerialCommTools - 打开串口成功，串口号 COM1 波特率 9600 数据位 88 停止位 1 校验位 无
+11:49:58.751 [AWT-EventQueue-0] INFO  tools.SerialCommTools - 关闭串口 //./COM1 成功
