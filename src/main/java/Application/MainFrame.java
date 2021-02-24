@@ -614,7 +614,7 @@ public class MainFrame extends JFrame {
                 powerTimestampTextField.setText(Long.toString(timestamp));
                 powerWriteConsumer.accept(3);
                 try {
-                    Thread.sleep(200);
+                    Thread.sleep(500);
                 }catch (Exception e2) {
                     log.error("{}", e2.getLocalizedMessage());
                 }
@@ -628,21 +628,18 @@ public class MainFrame extends JFrame {
                     if(Objects.nonNull(serialport) && serialPortOpenButton.getText().equals("关闭串口")) {
                         if(headTempAutoReadCheckBox.isSelected()) {
                             inverterReadConsumer.accept(5, 1);
+                            Thread.sleep(100);
                         }
-                        if(powerCurrentAutoReadCheckBox.isSelected()) {
-                            powerReadConsumer.accept(1, 1);
-                        }
-                    }
-                    Thread.sleep(100);
-                    if(Objects.nonNull(serialport) && serialPortOpenButton.getText().equals("关闭串口")) {
                         if(mosfetTempAutoReadCheckBox.isSelected()) {
                             inverterReadConsumer.accept(6, 1);
+                            Thread.sleep(100);
                         }
                         if(powerCurrentAutoReadCheckBox.isSelected()) {
                             powerReadConsumer.accept(1, 1);
+                            Thread.sleep(100);
                         }
                     }
-                    Thread.sleep(100);
+                    Thread.sleep(200);
                 }catch (InterruptedException e) {
                     log.error("{}", e);
                 }
@@ -737,7 +734,7 @@ public class MainFrame extends JFrame {
                 inverterTimestampTextField.setText(Long.toString(timestamp));
                 inverterWriteConsumer.accept(7);
                 try {
-                    Thread.sleep(200);
+                    Thread.sleep(500);
                 }catch (Exception e2) {
                     log.error("{}", e2.getLocalizedMessage());
                 }
@@ -801,8 +798,6 @@ public class MainFrame extends JFrame {
 
     public static void main(String[] args) {
         MainFrame frame = new MainFrame();
-        System.loadLibrary("rxtxSerial");
-//        System.loadLibrary("rxtxParallel");
         frame.initAllComponents();
 
         ConsoleStream consoleStream = new ConsoleStream(frame.logTextArea);
