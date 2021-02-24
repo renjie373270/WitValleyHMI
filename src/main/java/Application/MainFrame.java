@@ -799,12 +799,10 @@ public class MainFrame extends JFrame {
         initListener();
     }
 
-    private void initLogOutputStream() {
-
-    }
-
     public static void main(String[] args) {
         MainFrame frame = new MainFrame();
+        System.loadLibrary("rxtxSerial");
+//        System.loadLibrary("rxtxParallel");
         frame.initAllComponents();
 
         ConsoleStream consoleStream = new ConsoleStream(frame.logTextArea);
