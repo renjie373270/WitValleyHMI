@@ -239,7 +239,7 @@ public class SerialCommTools {
                     break;
 
                 case SerialPortEvent.BI: // 10.通讯中断
-                    ShowUtils.warningMessage("与串口设备通讯中断");
+//                    ShowUtils.warningMessage("与串口设备通讯中断");
                     log.error("与串口设备通讯中断");
                     break;
 
@@ -258,31 +258,4 @@ public class SerialCommTools {
             log.error("接收监听出错 {}", e.getLocalizedMessage());
         }
     }
-
-
-
-
-
-//    public static void main(String[] args) {
-//        List<String> portNameList = getPortNamelist();
-//        SerialPort serialPort;
-//        try {
-//            serialPort = openPort("COM6", 9600);
-//            byte[] sendDataByteArray = new byte[]{0x44, 0x4E, 0x00, 0x01, 0x52, 0x01, (byte)0xFE, 0x11, (byte)0x94, 0x00, 0x00, 0x19, 0x00, 0x00, 0x00, (byte)0xAA};
-//            sendData(serialPort, sendDataByteArray);
-//            try {
-//                Thread.sleep(1000);
-//            }catch (InterruptedException e) {
-//                log.error("休眠出错 {}", e.getLocalizedMessage());
-//            }
-//            byte[] receiveDataByteArray = receiveData(serialPort);
-//            int[] receiveDataIntArray = byteArrayToIntArrayFunction.apply(receiveDataByteArray);
-//            String receiveDataString = byteArrayToStringFunction.apply(receiveDataByteArray);
-//            log.info("收到串口数据 {}", receiveDataString);
-//            log.info("当前频率 {}KHz, 当前设定电流 {}mA, 当前温度 {}℃", receiveDataIntArray[5] << 8 | receiveDataIntArray[6], receiveDataIntArray[7] << 8 | receiveDataIntArray[8], receiveDataIntArray[11]);
-//            closePort(serialPort);
-//        }catch (PortInUseException e) {
-//            log.error("打开串口 {} 失败，串口被占用 {}", "COM6", e.getLocalizedMessage());
-//        }
-//    }
 }
