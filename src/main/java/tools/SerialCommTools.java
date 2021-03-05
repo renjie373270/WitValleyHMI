@@ -139,6 +139,10 @@ public class SerialCommTools {
                 }
                 index += length;
                 length = in.read(readBuffer);
+                if(length == 0) {//防止数据包被截断，延时后再读取一次
+                    SleepUtils.sleep(1);
+                    length = in.read(readBuffer);
+                }
             }
             byte[] returnBytes = new byte[index];
             for(i = 0; i < index; i++) {
