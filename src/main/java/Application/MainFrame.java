@@ -673,13 +673,16 @@ public class MainFrame extends JFrame {
         });
 
         Consumer<Integer> inverterWriteConsumer = start -> {
-            byte[] command = new byte[8];
+            byte[] command = new byte[11];
             String addrString = inverterAddrTextField.getText();
             int addrInt = Integer.parseInt(addrString);
             command[0] = (byte) addrInt;
             command[1] = (byte) 0x05;
             command[2] = (byte) 0x00;
             command[3] = start.byteValue();
+            command[4] = (byte) 0x00;
+            command[5] = (byte) 0x01;
+            command[6] = (byte) 0x02;
             String dataString = null;
             String timestampString = null;
             switch (start) {
@@ -706,13 +709,13 @@ public class MainFrame extends JFrame {
                     dataL = dataInt & 0xFF;
                 }
             }
-            command[4] = (byte) dataH;
-            command[5] = (byte) dataL;
-            String crcHexString = CRCTools.getModbusCRC(command, 6);
+            command[7] = (byte) dataH;
+            command[8] = (byte) dataL;
+            String crcHexString = CRCTools.getModbusCRC(command, 9);
             int crcH = SerialCommTools.hexStringToInt(crcHexString.substring(0, 2));
             int crcL = SerialCommTools.hexStringToInt(crcHexString.substring(2, 4));
-            command[6] = (byte)crcH;
-            command[7] = (byte)crcL;
+            command[9] = (byte)crcH;
+            command[10] = (byte)crcL;
             SerialCommTools.sendData(serialport, command);
         };
 
