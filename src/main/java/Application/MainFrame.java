@@ -65,11 +65,11 @@ public class MainFrame extends JFrame {
     private JLabel headTempLabel = new JLabel();
     private JTextField headTempTextField = new JTextField();
     private JCheckBox headTempAutoReadCheckBox = new JCheckBox("自动读取");
-    private JCheckBox mosfetTempAutoReadCheckBox = new JCheckBox("自动读取");
+//    private JCheckBox mosfetTempAutoReadCheckBox = new JCheckBox("自动读取");
     private JButton headTempButton = new JButton("读取");
-    private JLabel mosfetTempLabel = new JLabel();
-    private JTextField mosfetTempTextField = new JTextField();
-    private JButton mosfetTempButton = new JButton("读取");
+    private JLabel inverterFaultCodeLabel = new JLabel();
+    private JTextField inverterFaultCodeTextField = new JTextField();
+    private JButton inverterFaultCodeButton = new JButton("读取");
     private JLabel inverterTimestampLabel = new JLabel();
     private JTextField inverterTimestampTextField = new JTextField();
     private JButton readInverterTimestampButton = new JButton("读取");
@@ -180,35 +180,35 @@ public class MainFrame extends JFrame {
         inverterAddrTextField.setBounds(80, 20, 40, 20);
         inverterOperatePanel.add(inverterAddrTextField);
 
-        setFreqLabel.setText("设定频率");
+        setFreqLabel.setText("设定频率抽头");
         setFreqLabel.setForeground(Color.gray);
-        setFreqLabel.setBounds(10, 50, 60, 20);
+        setFreqLabel.setBounds(10, 50, 90, 20);
         inverterOperatePanel.add(setFreqLabel);
-        setFreqTextField.setBounds(80, 50, 60, 20);
+        setFreqTextField.setBounds(110, 50, 60, 20);
         inverterOperatePanel.add(setFreqTextField);
-        readSetFreqButton.setBounds(150, 50, 60, 20);
+        readSetFreqButton.setBounds(180, 50, 60, 20);
         inverterOperatePanel.add(readSetFreqButton);
-        writeSetFreqButton.setBounds(220, 50, 60, 20);
+        writeSetFreqButton.setBounds(250, 50, 60, 20);
         inverterOperatePanel.add(writeSetFreqButton);
 
-        actualFreqLabel.setText("实际频率");
-        actualFreqLabel.setForeground(Color.gray);
-        actualFreqLabel.setBounds(10, 80, 60, 20);
-        inverterOperatePanel.add(actualFreqLabel);
-        actualFreqTextField.setBounds(80, 80, 60, 20);
-        inverterOperatePanel.add(actualFreqTextField);
-        readActualFreqButton.setBounds(150, 80, 60, 20);
-        inverterOperatePanel.add(readActualFreqButton);
+//        actualFreqLabel.setText("实际频率抽头");
+//        actualFreqLabel.setForeground(Color.gray);
+//        actualFreqLabel.setBounds(10, 80, 60, 20);
+//        inverterOperatePanel.add(actualFreqLabel);
+//        actualFreqTextField.setBounds(80, 80, 60, 20);
+//        inverterOperatePanel.add(actualFreqTextField);
+//        readActualFreqButton.setBounds(150, 80, 60, 20);
+//        inverterOperatePanel.add(readActualFreqButton);
 
-        setCurrentLabel.setText("设定电流");
+        setCurrentLabel.setText("设定电流抽头");
         setCurrentLabel.setForeground(Color.gray);
-        setCurrentLabel.setBounds(10, 110, 60, 20);
+        setCurrentLabel.setBounds(10, 110, 90, 20);
         inverterOperatePanel.add(setCurrentLabel);
-        setCurrentTextField.setBounds(80, 110, 60, 20);
+        setCurrentTextField.setBounds(110, 110, 60, 20);
         inverterOperatePanel.add(setCurrentTextField);
-        readSetCurrentButton.setBounds(150, 110, 60, 20);
+        readSetCurrentButton.setBounds(180, 110, 60, 20);
         inverterOperatePanel.add(readSetCurrentButton);
-        writeSetCurrentButton.setBounds(220, 110, 60, 20);
+        writeSetCurrentButton.setBounds(250, 110, 60, 20);
         inverterOperatePanel.add(writeSetCurrentButton);
 
         headTempLabel.setText("焊头温度");
@@ -222,16 +222,14 @@ public class MainFrame extends JFrame {
         headTempAutoReadCheckBox.setBounds(220, 140, 80, 20);
         inverterOperatePanel.add(headTempAutoReadCheckBox);
 
-        mosfetTempLabel.setText("mos管温度");
-        mosfetTempLabel.setForeground(Color.gray);
-        mosfetTempLabel.setBounds(10, 170, 60, 20);
-        inverterOperatePanel.add(mosfetTempLabel);
-        mosfetTempTextField.setBounds(80, 170, 60, 20);
-        inverterOperatePanel.add(mosfetTempTextField);
-        mosfetTempButton.setBounds(150, 170, 60, 20);
-        inverterOperatePanel.add(mosfetTempButton);
-        mosfetTempAutoReadCheckBox.setBounds(220, 170, 80, 20);
-        inverterOperatePanel.add(mosfetTempAutoReadCheckBox);
+        inverterFaultCodeLabel.setText("故障码");
+        inverterFaultCodeLabel.setForeground(Color.gray);
+        inverterFaultCodeLabel.setBounds(10, 170, 60, 20);
+        inverterOperatePanel.add(inverterFaultCodeLabel);
+        inverterFaultCodeTextField.setBounds(80, 170, 60, 20);
+        inverterOperatePanel.add(inverterFaultCodeTextField);
+        inverterFaultCodeButton.setBounds(150, 170, 60, 20);
+        inverterOperatePanel.add(inverterFaultCodeButton);
 
         inverterTimestampLabel.setText("出厂时间");
         inverterTimestampLabel.setForeground(Color.gray);
@@ -310,12 +308,11 @@ public class MainFrame extends JFrame {
         writeSetCurrentButton.setEnabled(trueFalse);
         readSetCurrentButton.setEnabled(trueFalse);
         headTempButton.setEnabled(trueFalse);
-        mosfetTempButton.setEnabled(trueFalse);
+        inverterFaultCodeButton.setEnabled(trueFalse);
         writeInverterTimestampButton.setEnabled(trueFalse);
         readInverterTimestampButton.setEnabled(trueFalse);
         unlockInverterButton.setEnabled(trueFalse);
         headTempAutoReadCheckBox.setEnabled(trueFalse);
-        mosfetTempAutoReadCheckBox.setEnabled(trueFalse);
         readCurrentButton.setEnabled(trueFalse);
         readPowerTimestampButton.setEnabled(trueFalse);
         writePowerTimestampButton.setEnabled(trueFalse);
@@ -367,18 +364,20 @@ public class MainFrame extends JFrame {
                     data <<= 8;
                     data |= dataArray[4] & 0xFF;
                     switch (startAddress) {
-                        case 1: setFreqTextField.setText(Integer.toString(data) + "kHz"); break;
-                        case 2: actualFreqTextField.setText(Integer.toString(data) + "kHz"); break;
-                        case 3: setCurrentTextField.setText(Integer.toString(data) + "mA"); break;
+                        case 1: setFreqTextField.setText(Integer.toString(data) + ""); break;
+                        case 2: actualFreqTextField.setText(Integer.toString(data) + ""); break;
+                        case 3: setCurrentTextField.setText(Integer.toString(data) + ""); break;
                         case 5:
                             BigDecimal headTempDecimal = BigDecimal.valueOf(data / 100.0);
                             String headTempDecimalString = headTempDecimal.setScale(2, 2).toString() + "℃";
                             headTempTextField.setText(headTempDecimalString);
                             break;
                         case 6:
-                            BigDecimal mosfetTempDecimal = BigDecimal.valueOf(data / 100.0);
-                            String mosfetTempDecimalString = mosfetTempDecimal.setScale(2, 2).toString() + "℃";
-                            mosfetTempTextField.setText(mosfetTempDecimalString);
+                            if(data == 0) {
+                                inverterFaultCodeTextField.setText("无");
+                            } else if(data == 1) {
+                                inverterFaultCodeTextField.setText("短路");
+                            }
                             break;
                         default: break;
                     }
@@ -631,18 +630,14 @@ public class MainFrame extends JFrame {
                     if(Objects.nonNull(serialport) && serialPortOpenButton.getText().equals("关闭串口")) {
                         if(headTempAutoReadCheckBox.isSelected()) {
                             inverterReadConsumer.accept(5, 1);
-                            Thread.sleep(100);
-                        }
-                        if(mosfetTempAutoReadCheckBox.isSelected()) {
-                            inverterReadConsumer.accept(6, 1);
-                            Thread.sleep(100);
+                            Thread.sleep(10);
                         }
                         if(powerCurrentAutoReadCheckBox.isSelected()) {
                             powerReadConsumer.accept(1, 1);
-                            Thread.sleep(100);
+                            Thread.sleep(10);
                         }
                     }
-                    Thread.sleep(200);
+                    Thread.sleep(10);
                 }catch (InterruptedException e) {
                     log.error("{}", e);
                 }
@@ -658,7 +653,7 @@ public class MainFrame extends JFrame {
             }
         });
 
-        mosfetTempButton.addActionListener(new ActionListener() {
+        inverterFaultCodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 inverterReadConsumer.accept(6, 1);
@@ -712,6 +707,16 @@ public class MainFrame extends JFrame {
             command[7] = (byte) dataH;
             command[8] = (byte) dataL;
             String crcHexString = CRCTools.getModbusCRC(command, 9);
+            if(crcHexString.length() == 1) {
+                crcHexString = "000" + crcHexString;
+            }
+            if(crcHexString.length() == 2) {
+                crcHexString = "00" + crcHexString;
+            }
+            if(crcHexString.length() == 3) {
+                crcHexString = "0" + crcHexString;
+            }
+
             int crcH = SerialCommTools.hexStringToInt(crcHexString.substring(0, 2));
             int crcL = SerialCommTools.hexStringToInt(crcHexString.substring(2, 4));
             command[9] = (byte)crcH;
