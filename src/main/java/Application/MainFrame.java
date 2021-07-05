@@ -50,16 +50,16 @@ public class MainFrame extends JFrame {
     private byte[] receiveBuff;
     private JLabel inverterAddrLabel = new JLabel();
     private JTextField inverterAddrTextField = new JTextField();
-    //下限频率
-    private JLabel setMinFreqLabel = new JLabel();
-    private JTextField minFreqTextField = new JTextField();
-    private JButton readMinFreqButton = new JButton("读取");
-    private JButton writeMinFreqButton = new JButton("写入");
-    //上限频率
-    private JLabel setMaxFreqLabel = new JLabel();
-    private JTextField maxFreqTextField = new JTextField();
-    private JButton readMaxFreqButton = new JButton("读取");
-    private JButton writeMaxFreqButton = new JButton("写入");
+    //谐振频率
+    private JLabel setResenantFreqLabel = new JLabel();
+    private JTextField resonantFreqTextField = new JTextField();
+    private JButton readResonantFreqButton = new JButton("读取");
+    private JButton writeResonantFreqButton = new JButton("写入");
+    //死区占比
+    private JLabel setDeadTimeRatioLabel = new JLabel();
+    private JTextField deadTimeRatioTextField = new JTextField();
+    private JButton readDeadTimeRatioButton = new JButton("读取");
+    private JButton writeDeadTimeRatioButton = new JButton("写入");
     //设定电流
     private JLabel setCurrentLabel = new JLabel();
     private JTextField setCurrentTextField = new JTextField();
@@ -164,27 +164,27 @@ public class MainFrame extends JFrame {
         inverterAddrTextField.setBounds(80, 20, 40, 20);
         inverterOperatePanel.add(inverterAddrTextField);
 
-        setMinFreqLabel.setText("下限频率");
-        setMinFreqLabel.setForeground(Color.gray);
-        setMinFreqLabel.setBounds(10, 50, 60, 20);
-        inverterOperatePanel.add(setMinFreqLabel);
-        minFreqTextField.setBounds(80, 50, 60, 20);
-        inverterOperatePanel.add(minFreqTextField);
-        readMinFreqButton.setBounds(150, 50, 60, 20);
-        inverterOperatePanel.add(readMinFreqButton);
-        writeMinFreqButton.setBounds(220, 50, 60, 20);
-        inverterOperatePanel.add(writeMinFreqButton);
+        setResenantFreqLabel.setText("谐振频率");
+        setResenantFreqLabel.setForeground(Color.gray);
+        setResenantFreqLabel.setBounds(10, 50, 60, 20);
+        inverterOperatePanel.add(setResenantFreqLabel);
+        resonantFreqTextField.setBounds(80, 50, 60, 20);
+        inverterOperatePanel.add(resonantFreqTextField);
+        readResonantFreqButton.setBounds(150, 50, 60, 20);
+        inverterOperatePanel.add(readResonantFreqButton);
+        writeResonantFreqButton.setBounds(220, 50, 60, 20);
+        inverterOperatePanel.add(writeResonantFreqButton);
 
-        setMaxFreqLabel.setText("上限频率");
-        setMaxFreqLabel.setForeground(Color.gray);
-        setMaxFreqLabel.setBounds(10, 80, 60, 20);
-        inverterOperatePanel.add(setMaxFreqLabel);
-        maxFreqTextField.setBounds(80, 80, 60, 20);
-        inverterOperatePanel.add(maxFreqTextField);
-        readMaxFreqButton.setBounds(150, 80, 60, 20);
-        inverterOperatePanel.add(readMaxFreqButton);
-        writeMaxFreqButton.setBounds(220, 80, 60, 20);
-        inverterOperatePanel.add(writeMaxFreqButton);
+        setDeadTimeRatioLabel.setText("死区占比");
+        setDeadTimeRatioLabel.setForeground(Color.gray);
+        setDeadTimeRatioLabel.setBounds(10, 80, 60, 20);
+        inverterOperatePanel.add(setDeadTimeRatioLabel);
+        deadTimeRatioTextField.setBounds(80, 80, 60, 20);
+        inverterOperatePanel.add(deadTimeRatioTextField);
+        readDeadTimeRatioButton.setBounds(150, 80, 60, 20);
+        inverterOperatePanel.add(readDeadTimeRatioButton);
+        writeDeadTimeRatioButton.setBounds(220, 80, 60, 20);
+        inverterOperatePanel.add(writeDeadTimeRatioButton);
 
         setCurrentLabel.setText("设定电流");
         setCurrentLabel.setForeground(Color.gray);
@@ -386,16 +386,16 @@ public class MainFrame extends JFrame {
     }
 
     Consumer<Boolean> consumerButtonDisplay = trueFalse -> {
-        readMinFreqButton.setEnabled(trueFalse);
-        writeMinFreqButton.setEnabled(trueFalse);
+        readResonantFreqButton.setEnabled(trueFalse);
+        writeResonantFreqButton.setEnabled(trueFalse);
         writeSetCurrentButton.setEnabled(trueFalse);
         readSetCurrentButton.setEnabled(trueFalse);
         readHeadTempButton.setEnabled(trueFalse);
         writeTimestampButton.setEnabled(trueFalse);
         readTimestampButton.setEnabled(trueFalse);
         headTempAutoReadCheckBox.setEnabled(trueFalse);
-        readMaxFreqButton.setEnabled(trueFalse);
-        writeMaxFreqButton.setEnabled(trueFalse);
+        readDeadTimeRatioButton.setEnabled(trueFalse);
+        writeDeadTimeRatioButton.setEnabled(trueFalse);
         readTempFeedbackButton.setEnabled(trueFalse);
         writeTempFeedbackButton.setEnabled(trueFalse);
         readCurrentFeedbackButton.setEnabled(trueFalse);
@@ -456,8 +456,8 @@ public class MainFrame extends JFrame {
                     data <<= 8;
                     data |= dataArray[4] & 0xFF;
                     switch (startAddress) {
-                        case 1: minFreqTextField.setText(Integer.toString(data) + "KHz"); break;
-                        case 2: maxFreqTextField.setText(Integer.toString(data) + "KHz"); break;
+                        case 1: resonantFreqTextField.setText(Integer.toString(data) + "KHz"); break;
+                        case 2: deadTimeRatioTextField.setText(Integer.toString(data) + "%"); break;
                         case 3: setCurrentTextField.setText(Integer.toString(data) + "mA"); break;
                         case 6: phaseTextField.setText(Integer.toString(data) + "°");break;
                         case 10: boardTempTextField.setText(Integer.toString(data) + "℃");break;
@@ -586,14 +586,14 @@ public class MainFrame extends JFrame {
             startAddress = start;
         };
 
-        readMinFreqButton.addActionListener(new ActionListener() {
+        readResonantFreqButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 inverterReadConsumer.accept(1, 1);
             }
         });
 
-        readMaxFreqButton.addActionListener(new ActionListener() {
+        readDeadTimeRatioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 inverterReadConsumer.accept(2, 1);
@@ -723,8 +723,8 @@ public class MainFrame extends JFrame {
             String dataString = null;
             String timestampString = null;
             switch (start) {
-                case 1: dataString = minFreqTextField.getText(); break;
-                case 2: dataString = maxFreqTextField.getText(); break;
+                case 1: dataString = resonantFreqTextField.getText(); break;
+                case 2: dataString = deadTimeRatioTextField.getText(); break;
                 case 3: dataString = setCurrentTextField.getText(); break;
                 case 4: dataString = tempFeedbackComBox.getSelectedItem().toString(); break;
                 case 5: dataString = currentFeedbackComBox.getSelectedItem().toString(); break;
@@ -779,14 +779,14 @@ public class MainFrame extends JFrame {
             SerialCommTools.sendData(serialport, command);
         };
 
-        writeMinFreqButton.addActionListener(new ActionListener() {
+        writeResonantFreqButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 inverterWriteConsumer.accept(1);
             }
         });
 
-        writeMaxFreqButton.addActionListener(new ActionListener() {
+        writeDeadTimeRatioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 inverterWriteConsumer.accept(2);
