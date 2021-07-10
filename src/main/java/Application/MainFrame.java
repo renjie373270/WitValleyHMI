@@ -545,7 +545,9 @@ public class MainFrame extends JFrame {
                                     if(Objects.nonNull(receiveBuff)) {
                                         log.info("收到数据 {}", SerialCommTools.byteArrayToStringFunction.apply(receiveBuff));
                                         if(CRCTools.checkModbusCRC(receiveBuff, receiveBuff.length)) {
-                                            if(receiveBuff[0] == 0x01) {
+                                            String addrString = inverterAddrTextField.getText();
+                                            int addr = Integer.parseInt(addrString);
+                                            if(receiveBuff[0] == addr) {
                                                 inverterReceiveConsumer.accept(receiveBuff);
                                             }
                                         } else {
