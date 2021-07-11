@@ -106,7 +106,7 @@ public class SerialCommTools {
             out = serialPort.getOutputStream();
             out.write(data);
             out.flush();
-            log.info("{} 发送数据成功 {}", serialPort.getName(), byteArrayToStringFunction.apply(data));
+            log.info("发送数据成功 >>>>>>>>>>>>>>>>>>>> {}", byteArrayToStringFunction.apply(data));
         } catch (IOException e) {
             log.error("发送数据失败 {}", e.getLocalizedMessage());
         } finally {

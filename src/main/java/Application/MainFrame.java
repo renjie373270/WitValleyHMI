@@ -543,7 +543,7 @@ public class MainFrame extends JFrame {
                                 } else {
                                     receiveBuff = SerialCommTools.receiveData(serialport);
                                     if(Objects.nonNull(receiveBuff)) {
-                                        log.info("收到数据 {}", SerialCommTools.byteArrayToStringFunction.apply(receiveBuff));
+                                        log.info("收到数据 <<<<<<<<<< {}", SerialCommTools.byteArrayToStringFunction.apply(receiveBuff));
                                         if(CRCTools.checkModbusCRC(receiveBuff, receiveBuff.length)) {
                                             String addrString = inverterAddrTextField.getText();
                                             int addr = Integer.parseInt(addrString);
@@ -551,7 +551,7 @@ public class MainFrame extends JFrame {
                                                 inverterReceiveConsumer.accept(receiveBuff);
                                             }
                                         } else {
-                                            log.error("CRC 校验失败");
+                                            log.error("CRC 校验失败 ********************");
                                         }
                                     }
                                 }
