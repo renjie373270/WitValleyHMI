@@ -450,7 +450,7 @@ public class MainFrame extends JFrame {
 
         Consumer<byte[]> inverterReceiveConsumer = dataArray -> {
             if(dataArray[1] == 0x03) {
-                int size = dataArray[2] - 2;
+                int size = dataArray[2];
                 if(size == 2) {
                     int data = dataArray[3] & 0xFF;
                     data <<= 8;
