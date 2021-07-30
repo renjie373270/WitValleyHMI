@@ -75,11 +75,11 @@ public class MainFrame extends JFrame {
     private JComboBox currentFeedbackComBox = new JComboBox();
     private JButton readCurrentFeedbackButton = new JButton("读取");
     private JButton writeCurrentFeedbackButton = new JButton("写入");
-    //锁相角度
-    private JLabel phaseLabel = new JLabel();
-    private JTextField phaseTextField = new JTextField();
-    private JButton readPhaseButton = new JButton("读取");
-    private JButton writePhaseButton = new JButton("写入");
+    //调试开关
+    private JLabel debugLabel = new JLabel();
+    private JTextField debugTextField = new JTextField();
+    private JButton readDebugButton = new JButton("读取");
+    private JButton writeDebugButton = new JButton("写入");
     //停用模式
     private JLabel stopLabel = new JLabel();
     private JTextField stopTextField = new JTextField();
@@ -223,16 +223,16 @@ public class MainFrame extends JFrame {
         writeCurrentFeedbackButton.setBounds(220, 170, 60, 20);
         inverterOperatePanel.add(writeCurrentFeedbackButton);
 
-        phaseLabel.setText("锁定相位");
-        phaseLabel.setForeground(Color.gray);
-        phaseLabel.setBounds(10, 200, 60, 20);
-        inverterOperatePanel.add(phaseLabel);
-        phaseTextField.setBounds(80, 200, 60, 20);
-        inverterOperatePanel.add(phaseTextField);
-        readPhaseButton.setBounds(150, 200, 60, 20);
-        inverterOperatePanel.add(readPhaseButton);
-        writePhaseButton.setBounds(220, 200, 60, 20);
-        inverterOperatePanel.add(writePhaseButton);
+        debugLabel.setText("调试开关");
+        debugLabel.setForeground(Color.gray);
+        debugLabel.setBounds(10, 200, 60, 20);
+        inverterOperatePanel.add(debugLabel);
+        debugTextField.setBounds(80, 200, 60, 20);
+        inverterOperatePanel.add(debugTextField);
+        readDebugButton.setBounds(150, 200, 60, 20);
+        inverterOperatePanel.add(readDebugButton);
+        writeDebugButton.setBounds(220, 200, 60, 20);
+        inverterOperatePanel.add(writeDebugButton);
 
         timestampLabel.setText("出厂时间");
         timestampLabel.setForeground(Color.gray);
@@ -400,8 +400,8 @@ public class MainFrame extends JFrame {
         writeTempFeedbackButton.setEnabled(trueFalse);
         readCurrentFeedbackButton.setEnabled(trueFalse);
         writeCurrentFeedbackButton.setEnabled(trueFalse);
-        readPhaseButton.setEnabled(trueFalse);
-        writePhaseButton.setEnabled(trueFalse);
+        readDebugButton.setEnabled(trueFalse);
+        writeDebugButton.setEnabled(trueFalse);
         writeStopButton.setEnabled(trueFalse);
         readBoardTempButton.setEnabled(trueFalse);
         readVoltage1Button.setEnabled(trueFalse);
@@ -459,7 +459,7 @@ public class MainFrame extends JFrame {
                         case 1: resonantFreqTextField.setText(Integer.toString(data) + "KHz"); break;
                         case 2: deadTimeRatioTextField.setText(Integer.toString(data) + "%"); break;
                         case 3: setCurrentTextField.setText(Integer.toString(data) + "mA"); break;
-                        case 6: phaseTextField.setText(Integer.toString(data) + "°");break;
+                        case 19: debugTextField.setText(Integer.toString(data));break;
                         case 10: boardTempTextField.setText(Integer.toString(data) + "℃");break;
                         case 11: mosfetTempTextField.setText(Integer.toString(data) + "℃");break;
                         case 12: headTempTextField.setText(Integer.toString(data) + "℃");break;
@@ -623,10 +623,10 @@ public class MainFrame extends JFrame {
             }
         });
 
-        readPhaseButton.addActionListener(new ActionListener() {
+        readDebugButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(6, 1);
+                inverterReadConsumer.accept(19, 1);
             }
         });
 
@@ -730,7 +730,7 @@ public class MainFrame extends JFrame {
                 case 3: dataString = setCurrentTextField.getText(); break;
                 case 4: dataString = tempFeedbackComBox.getSelectedItem().toString(); break;
                 case 5: dataString = currentFeedbackComBox.getSelectedItem().toString(); break;
-                case 6: dataString = phaseTextField.getText(); break;
+                case 19: dataString = debugTextField.getText(); break;
                 case 7: dataString = timestampTextField.getText(); break;
                 case 8: dataString = timestampTextField.getText(); break;
                 case 9: dataString = "170"; break;
@@ -816,10 +816,10 @@ public class MainFrame extends JFrame {
             }
         });
 
-        writePhaseButton.addActionListener(new ActionListener() {
+        writeDebugButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inverterWriteConsumer.accept(6);
+                inverterWriteConsumer.accept(19);
             }
         });
 
