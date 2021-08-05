@@ -729,9 +729,9 @@ public class MainFrame extends JFrame {
             String dataString = null;
             String timestampString = null;
             switch (start) {
-                case 1: dataString = resonantFreqTextField.getText(); break;
+                case 1: dataString = resonantFreqTextField.getText().replaceAll("(?i)khz",""); break;
                 case 2: dataString = deadTimeRatioTextField.getText(); break;
-                case 3: dataString = setCurrentTextField.getText(); break;
+                case 3: dataString = setCurrentTextField.getText().replaceAll("(?i)ma",""); break;
                 case 4: dataString = tempFeedbackComBox.getSelectedItem().toString(); break;
                 case 5: dataString = currentFeedbackComBox.getSelectedItem().toString(); break;
                 case 19: dataString = debugTextField.getText(); break;
