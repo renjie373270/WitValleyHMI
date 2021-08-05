@@ -59,7 +59,8 @@ public class MainFrame extends JFrame {
     private JLabel setDeadTimeRatioLabel = new JLabel();
     private JTextField deadTimeRatioTextField = new JTextField();
     private JButton readDeadTimeRatioButton = new JButton("读取");
-    private JButton writeDeadTimeRatioButton = new JButton("写入");
+    //死区占比改电量 todo
+   // private JButton writeDeadTimeRatioButton = new JButton("写入");
     //设定电流
     private JLabel setCurrentLabel = new JLabel();
     private JTextField setCurrentTextField = new JTextField();
@@ -152,7 +153,7 @@ public class MainFrame extends JFrame {
     private void initInverterOperateArea() {
         // 操作
         inverterOperatePanel.setBorder(BorderFactory.createTitledBorder("逆变器参数"));
-        inverterOperatePanel.setBounds(10, 150, 400, 560);
+        inverterOperatePanel.setBounds(10, 150, 400, 590);
         inverterOperatePanel.setLayout(null);
         add(inverterOperatePanel);
 
@@ -175,7 +176,7 @@ public class MainFrame extends JFrame {
         writeResonantFreqButton.setBounds(220, 50, 60, 20);
         inverterOperatePanel.add(writeResonantFreqButton);
 
-        setDeadTimeRatioLabel.setText("死区占比");
+        setDeadTimeRatioLabel.setText("用电量");
         setDeadTimeRatioLabel.setForeground(Color.gray);
         setDeadTimeRatioLabel.setBounds(10, 80, 60, 20);
         inverterOperatePanel.add(setDeadTimeRatioLabel);
@@ -183,8 +184,10 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(deadTimeRatioTextField);
         readDeadTimeRatioButton.setBounds(150, 80, 60, 20);
         inverterOperatePanel.add(readDeadTimeRatioButton);
-        writeDeadTimeRatioButton.setBounds(220, 80, 60, 20);
-        inverterOperatePanel.add(writeDeadTimeRatioButton);
+
+        //死区占比改电量 todo
+       // writeDeadTimeRatioButton.setBounds(220, 80, 60, 20);
+       // inverterOperatePanel.add(writeDeadTimeRatioButton);
 
         setCurrentLabel.setText("设定电流");
         setCurrentLabel.setForeground(Color.gray);
@@ -225,13 +228,13 @@ public class MainFrame extends JFrame {
 
         debugLabel.setText("调试开关");
         debugLabel.setForeground(Color.gray);
-        debugLabel.setBounds(10, 200, 60, 20);
+        debugLabel.setBounds(10, 560, 60, 20);
         inverterOperatePanel.add(debugLabel);
-        debugTextField.setBounds(80, 200, 60, 20);
+        debugTextField.setBounds(80, 560, 60, 20);
         inverterOperatePanel.add(debugTextField);
-        readDebugButton.setBounds(150, 200, 60, 20);
+        readDebugButton.setBounds(150, 560, 60, 20);
         inverterOperatePanel.add(readDebugButton);
-        writeDebugButton.setBounds(220, 200, 60, 20);
+        writeDebugButton.setBounds(220, 560, 60, 20);
         inverterOperatePanel.add(writeDebugButton);
 
         timestampLabel.setText("出厂时间");
@@ -395,7 +398,8 @@ public class MainFrame extends JFrame {
         readTimestampButton.setEnabled(trueFalse);
         headTempAutoReadCheckBox.setEnabled(trueFalse);
         readDeadTimeRatioButton.setEnabled(trueFalse);
-        writeDeadTimeRatioButton.setEnabled(trueFalse);
+        //死区占比改电量 todo
+        //writeDeadTimeRatioButton.setEnabled(trueFalse);
         readTempFeedbackButton.setEnabled(trueFalse);
         writeTempFeedbackButton.setEnabled(trueFalse);
         readCurrentFeedbackButton.setEnabled(trueFalse);
@@ -457,7 +461,7 @@ public class MainFrame extends JFrame {
                     data |= dataArray[4] & 0xFF;
                     switch (startAddress) {
                         case 1: resonantFreqTextField.setText(Integer.toString(data) + "KHz"); break;
-                        case 2: deadTimeRatioTextField.setText(Integer.toString(data) + "%"); break;
+                        case 2: deadTimeRatioTextField.setText(Integer.toString(data) + "kJ"); break;
                         case 3: setCurrentTextField.setText(Integer.toString(data) + "mA"); break;
                         case 19: debugTextField.setText(Integer.toString(data));break;
                         case 10: boardTempTextField.setText(Integer.toString(data) + "℃");break;
@@ -787,13 +791,13 @@ public class MainFrame extends JFrame {
                 inverterWriteConsumer.accept(1);
             }
         });
-
-        writeDeadTimeRatioButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                inverterWriteConsumer.accept(2);
-            }
-        });
+        //死区占比改电量 todo
+//        writeDeadTimeRatioButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                inverterWriteConsumer.accept(2);
+//            }
+//        });
 
         writeSetCurrentButton.addActionListener(new ActionListener() {
             @Override
