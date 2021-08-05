@@ -461,7 +461,7 @@ public class MainFrame extends JFrame {
                     data |= dataArray[4] & 0xFF;
                     switch (startAddress) {
                         case 1: resonantFreqTextField.setText(Integer.toString(data) + "KHz"); break;
-                        case 2: deadTimeRatioTextField.setText(Integer.toString(data) + "kJ"); break;
+                        case 2: deadTimeRatioTextField.setText(Integer.toString(data) + "J"); break;
                         case 3: setCurrentTextField.setText(Integer.toString(data) + "mA"); break;
                         case 19: debugTextField.setText(Integer.toString(data));break;
                         case 10: boardTempTextField.setText(Integer.toString(data) + "℃");break;
