@@ -55,12 +55,10 @@ public class MainFrame extends JFrame {
     private JTextField resonantFreqTextField = new JTextField();
     private JButton readResonantFreqButton = new JButton("读取");
     private JButton writeResonantFreqButton = new JButton("写入");
-    //死区占比
-    private JLabel setDeadTimeRatioLabel = new JLabel();
-    private JTextField deadTimeRatioTextField = new JTextField();
-    private JButton readDeadTimeRatioButton = new JButton("读取");
-    //死区占比改电量 todo
-   // private JButton writeDeadTimeRatioButton = new JButton("写入");
+    //焊接能量
+    private JLabel powerConsumptionLabel = new JLabel();
+    private JTextField powerConsumptionTextField = new JTextField();
+    private JButton readPowerConsumptionButton = new JButton("读取");
     //设定电流
     private JLabel setCurrentLabel = new JLabel();
     private JTextField setCurrentTextField = new JTextField();
@@ -176,18 +174,14 @@ public class MainFrame extends JFrame {
         writeResonantFreqButton.setBounds(220, 50, 60, 20);
         inverterOperatePanel.add(writeResonantFreqButton);
 
-        setDeadTimeRatioLabel.setText("用电量");
-        setDeadTimeRatioLabel.setForeground(Color.gray);
-        setDeadTimeRatioLabel.setBounds(10, 80, 60, 20);
-        inverterOperatePanel.add(setDeadTimeRatioLabel);
-        deadTimeRatioTextField.setBounds(80, 80, 60, 20);
-        inverterOperatePanel.add(deadTimeRatioTextField);
-        readDeadTimeRatioButton.setBounds(150, 80, 60, 20);
-        inverterOperatePanel.add(readDeadTimeRatioButton);
-
-        //死区占比改电量 todo
-       // writeDeadTimeRatioButton.setBounds(220, 80, 60, 20);
-       // inverterOperatePanel.add(writeDeadTimeRatioButton);
+        powerConsumptionLabel.setText("用电量");
+        powerConsumptionLabel.setForeground(Color.gray);
+        powerConsumptionLabel.setBounds(10, 80, 60, 20);
+        inverterOperatePanel.add(powerConsumptionLabel);
+        powerConsumptionTextField.setBounds(80, 80, 60, 20);
+        inverterOperatePanel.add(powerConsumptionTextField);
+        readPowerConsumptionButton.setBounds(150, 80, 60, 20);
+        inverterOperatePanel.add(readPowerConsumptionButton);
 
         setCurrentLabel.setText("设定电流");
         setCurrentLabel.setForeground(Color.gray);
@@ -397,9 +391,7 @@ public class MainFrame extends JFrame {
         writeTimestampButton.setEnabled(trueFalse);
         readTimestampButton.setEnabled(trueFalse);
         headTempAutoReadCheckBox.setEnabled(trueFalse);
-        readDeadTimeRatioButton.setEnabled(trueFalse);
-        //死区占比改电量 todo
-        //writeDeadTimeRatioButton.setEnabled(trueFalse);
+        readPowerConsumptionButton.setEnabled(trueFalse);
         readTempFeedbackButton.setEnabled(trueFalse);
         writeTempFeedbackButton.setEnabled(trueFalse);
         readCurrentFeedbackButton.setEnabled(trueFalse);
@@ -461,16 +453,16 @@ public class MainFrame extends JFrame {
                     data |= dataArray[4] & 0xFF;
                     switch (startAddress) {
                         case 1: resonantFreqTextField.setText(Integer.toString(data) + "KHz"); break;
-                        case 2: deadTimeRatioTextField.setText(Integer.toString(data) + "J"); break;
+                        case 2: powerConsumptionTextField.setText(Integer.toString(data) + "J"); break;
                         case 3: setCurrentTextField.setText(Integer.toString(data) + "mA"); break;
+                        case 4: boardTempTextField.setText(Integer.toString(data) + "℃");break;
+                        case 5: mosfetTempTextField.setText(Integer.toString(data) + "℃");break;
+                        case 6: headTempTextField.setText(Integer.toString(data) + "℃");break;
+                        case 14: voltage1TextField.setText(Integer.toString(data) + "mV");break;
+                        case 15: voltage2TextField.setText(Integer.toString(data) + "mV");break;
+                        case 16: current1TextField.setText(Integer.toString(data) + "mA");break;
                         case 19: debugTextField.setText(Integer.toString(data));break;
-                        case 10: boardTempTextField.setText(Integer.toString(data) + "℃");break;
-                        case 11: mosfetTempTextField.setText(Integer.toString(data) + "℃");break;
-                        case 12: headTempTextField.setText(Integer.toString(data) + "℃");break;
-                        case 13: voltage1TextField.setText(Integer.toString(data) + "mV");break;
-                        case 14: voltage2TextField.setText(Integer.toString(data) + "mV");break;
-                        case 15: current1TextField.setText(Integer.toString(data) + "mA");break;
-                        case 16:
+                        case 7:
                             StringBuilder builder = new StringBuilder();
                             if(data == 0) {
                                 errorTextArea.setText("无");
@@ -496,7 +488,7 @@ public class MainFrame extends JFrame {
                         default: break;
                     }
                 }else if(size == 4) {
-                    if(startAddress == 7) {
+                    if(startAddress == 11) {
                         int data = dataArray[3] & 0xFF;
                         data <<= 8;
                         data |= dataArray[4] & 0xFF;
@@ -599,7 +591,7 @@ public class MainFrame extends JFrame {
             }
         });
 
-        readDeadTimeRatioButton.addActionListener(new ActionListener() {
+        readPowerConsumptionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 inverterReadConsumer.accept(2, 1);
@@ -616,14 +608,14 @@ public class MainFrame extends JFrame {
         readTempFeedbackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(4, 1);
+                inverterReadConsumer.accept(8, 1);
             }
         });
 
         readCurrentFeedbackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(5, 1);
+                inverterReadConsumer.accept(9, 1);
             }
         });
 
@@ -637,56 +629,56 @@ public class MainFrame extends JFrame {
         readTimestampButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(7, 2);
+                inverterReadConsumer.accept(11, 2);
             }
         });
 
         readBoardTempButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(10, 1);
+                inverterReadConsumer.accept(4, 1);
             }
         });
 
         readMosfetTempButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(11, 1);
+                inverterReadConsumer.accept(5, 1);
             }
         });
 
         readHeadTempButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(12, 1);
+                inverterReadConsumer.accept(6, 1);
             }
         });
 
         readVoltage1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(13, 1);
+                inverterReadConsumer.accept(14, 1);
             }
         });
 
         readVoltage2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(14, 1);
+                inverterReadConsumer.accept(15, 1);
             }
         });
 
         readCurrent1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(15, 1);
+                inverterReadConsumer.accept(16, 1);
             }
         });
 
         readErrorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(16, 1);
+                inverterReadConsumer.accept(7, 1);
             }
         });
 
@@ -730,7 +722,7 @@ public class MainFrame extends JFrame {
             String timestampString = null;
             switch (start) {
                 case 1: dataString = resonantFreqTextField.getText().replaceAll("(?i)khz",""); break;
-                case 2: dataString = deadTimeRatioTextField.getText(); break;
+                case 2: dataString = powerConsumptionTextField.getText(); break;
                 case 3: dataString = setCurrentTextField.getText().replaceAll("(?i)ma",""); break;
                 case 4: dataString = tempFeedbackComBox.getSelectedItem().toString(); break;
                 case 5: dataString = currentFeedbackComBox.getSelectedItem().toString(); break;
