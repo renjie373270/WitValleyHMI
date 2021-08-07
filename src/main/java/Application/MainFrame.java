@@ -74,11 +74,6 @@ public class MainFrame extends JFrame {
     private JComboBox currentFeedbackComBox = new JComboBox();
     private JButton readCurrentFeedbackButton = new JButton("读取");
     private JButton writeCurrentFeedbackButton = new JButton("写入");
-    //调试开关
-    private JLabel debugLabel = new JLabel();
-    private JTextField debugTextField = new JTextField();
-    private JButton readDebugButton = new JButton("读取");
-    private JButton writeDebugButton = new JButton("写入");
     //停用模式
     private JLabel stopLabel = new JLabel();
     private JTextField stopTextField = new JTextField();
@@ -116,6 +111,14 @@ public class MainFrame extends JFrame {
     private JTextField solderTimesTextField = new JTextField();
     private JButton readSolderTimesButton = new JButton("读取");
     private JButton writeSolderTimesButton = new JButton("写入");
+    //调试开关
+    private JLabel debugLabel = new JLabel();
+    private JTextField debugTextField = new JTextField();
+    private JButton readDebugButton = new JButton("读取");
+    private JButton writeDebugButton = new JButton("写入");
+    //焊接日志读取
+//    private JLabel solderLogLabel = new JLabel();
+//    private JButton readSolderLogButton = new JButton("读取");
 
     private JCheckBox headTempAutoReadCheckBox = new JCheckBox("自动读取");;
     private JLabel timestampLabel = new JLabel();
@@ -149,6 +152,7 @@ public class MainFrame extends JFrame {
     }
 
     private void initInverterOperateArea() {
+        int posY = 20;
         // 操作
         inverterOperatePanel.setBorder(BorderFactory.createTitledBorder("逆变器参数"));
         inverterOperatePanel.setBounds(10, 150, 400, 590);
@@ -157,175 +161,199 @@ public class MainFrame extends JFrame {
 
         inverterAddrLabel.setText("地址");
         inverterAddrLabel.setForeground(Color.gray);
-        inverterAddrLabel.setBounds(10, 20, 60, 20);
+        inverterAddrLabel.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(inverterAddrLabel);
         inverterAddrTextField.setText("1");
-        inverterAddrTextField.setBounds(80, 20, 40, 20);
+        inverterAddrTextField.setBounds(80, posY, 40, 20);
         inverterOperatePanel.add(inverterAddrTextField);
+        posY += 30;
 
         setResenantFreqLabel.setText("谐振频率");
         setResenantFreqLabel.setForeground(Color.gray);
-        setResenantFreqLabel.setBounds(10, 50, 60, 20);
+        setResenantFreqLabel.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(setResenantFreqLabel);
-        resonantFreqTextField.setBounds(80, 50, 60, 20);
+        resonantFreqTextField.setBounds(80, posY, 60, 20);
         inverterOperatePanel.add(resonantFreqTextField);
-        readResonantFreqButton.setBounds(150, 50, 60, 20);
+        readResonantFreqButton.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(readResonantFreqButton);
-        writeResonantFreqButton.setBounds(220, 50, 60, 20);
+        writeResonantFreqButton.setBounds(220, posY, 60, 20);
         inverterOperatePanel.add(writeResonantFreqButton);
+        posY += 30;
 
         powerConsumptionLabel.setText("用电量");
         powerConsumptionLabel.setForeground(Color.gray);
-        powerConsumptionLabel.setBounds(10, 80, 60, 20);
+        powerConsumptionLabel.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(powerConsumptionLabel);
-        powerConsumptionTextField.setBounds(80, 80, 60, 20);
+        powerConsumptionTextField.setBounds(80, posY, 60, 20);
         inverterOperatePanel.add(powerConsumptionTextField);
-        readPowerConsumptionButton.setBounds(150, 80, 60, 20);
+        readPowerConsumptionButton.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(readPowerConsumptionButton);
+        posY += 30;
 
         setCurrentLabel.setText("设定电流");
         setCurrentLabel.setForeground(Color.gray);
-        setCurrentLabel.setBounds(10, 110, 60, 20);
+        setCurrentLabel.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(setCurrentLabel);
-        setCurrentTextField.setBounds(80, 110, 60, 20);
+        setCurrentTextField.setBounds(80, posY, 60, 20);
         inverterOperatePanel.add(setCurrentTextField);
-        readSetCurrentButton.setBounds(150, 110, 60, 20);
+        readSetCurrentButton.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(readSetCurrentButton);
-        writeSetCurrentButton.setBounds(220, 110, 60, 20);
+        writeSetCurrentButton.setBounds(220, posY, 60, 20);
         inverterOperatePanel.add(writeSetCurrentButton);
+        posY += 30;
 
         tempFeedbackLabel.setText("温度反馈");
         tempFeedbackLabel.setForeground(Color.gray);
-        tempFeedbackLabel.setBounds(10, 140, 60, 20);
+        tempFeedbackLabel.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(tempFeedbackLabel);
         tempFeedbackComBox.setFocusable(false);
-        tempFeedbackComBox.setBounds(80, 140, 60, 20);
+        tempFeedbackComBox.setBounds(80, posY, 60, 20);
         tempFeedbackComBox.addItem("NONE");
         inverterOperatePanel.add(tempFeedbackComBox);
-        readTempFeedbackButton.setBounds(150, 140, 60, 20);
+        readTempFeedbackButton.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(readTempFeedbackButton);
-        writeTempFeedbackButton.setBounds(220, 140, 60, 20);
+        writeTempFeedbackButton.setBounds(220, posY, 60, 20);
         inverterOperatePanel.add(writeTempFeedbackButton);
+        posY += 30;
 
         currentFeedbackLabel.setText("电流控制");
         currentFeedbackLabel.setForeground(Color.gray);
-        currentFeedbackLabel.setBounds(10, 170, 60, 20);
+        currentFeedbackLabel.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(currentFeedbackLabel);
         currentFeedbackComBox.setFocusable(false);
-        currentFeedbackComBox.setBounds(80, 170, 60, 20);
+        currentFeedbackComBox.setBounds(80, posY, 60, 20);
         currentFeedbackComBox.addItem("NONE");
         inverterOperatePanel.add(currentFeedbackComBox);
-        readCurrentFeedbackButton.setBounds(150, 170, 60, 20);
+        readCurrentFeedbackButton.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(readCurrentFeedbackButton);
-        writeCurrentFeedbackButton.setBounds(220, 170, 60, 20);
+        writeCurrentFeedbackButton.setBounds(220, posY, 60, 20);
         inverterOperatePanel.add(writeCurrentFeedbackButton);
-
-        debugLabel.setText("调试开关");
-        debugLabel.setForeground(Color.gray);
-        debugLabel.setBounds(10, 560, 60, 20);
-        inverterOperatePanel.add(debugLabel);
-        debugTextField.setBounds(80, 560, 60, 20);
-        inverterOperatePanel.add(debugTextField);
-        readDebugButton.setBounds(150, 560, 60, 20);
-        inverterOperatePanel.add(readDebugButton);
-        writeDebugButton.setBounds(220, 560, 60, 20);
-        inverterOperatePanel.add(writeDebugButton);
+        posY += 30;
 
         timestampLabel.setText("出厂时间");
         timestampLabel.setForeground(Color.gray);
-        timestampLabel.setBounds(10, 230, 60, 20);
+        timestampLabel.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(timestampLabel);
-        timestampTextField.setBounds(80, 230, 160, 20);
+        timestampTextField.setBounds(80, posY, 160, 20);
         inverterOperatePanel.add(timestampTextField);
-        readTimestampButton.setBounds(250, 230, 60, 20);
+        readTimestampButton.setBounds(250, posY, 60, 20);
         inverterOperatePanel.add(readTimestampButton);
-        writeTimestampButton.setBounds(320, 230, 60, 20);
+        writeTimestampButton.setBounds(320, posY, 60, 20);
         inverterOperatePanel.add(writeTimestampButton);
+        posY += 30;
 
         stopLabel.setText("停用模式");
         stopLabel.setForeground(Color.gray);
-        stopLabel.setBounds(10, 260, 60, 20);
+        stopLabel.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(stopLabel);
-        stopTextField.setBounds(80, 260, 60, 20);
+        stopTextField.setBounds(80, posY, 60, 20);
         inverterOperatePanel.add(stopTextField);
-        writeStopButton.setBounds(220, 260, 60, 20);
+        writeStopButton.setBounds(220, posY, 60, 20);
         inverterOperatePanel.add(writeStopButton);
+        posY += 30;
 
         boardTempLabel.setText("主板温度");
         boardTempLabel.setForeground(Color.gray);
-        boardTempLabel.setBounds(10, 290, 60, 20);
+        boardTempLabel.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(boardTempLabel);
-        boardTempTextField.setBounds(80, 290, 60, 20);
+        boardTempTextField.setBounds(80, posY, 60, 20);
         inverterOperatePanel.add(boardTempTextField);
-        readBoardTempButton.setBounds(150, 290, 60, 20);
+        readBoardTempButton.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(readBoardTempButton);
+        posY += 30;
 
         mosfetTempLabel.setText("MOS温度");
         mosfetTempLabel.setForeground(Color.gray);
-        mosfetTempLabel.setBounds(10, 320, 60, 20);
+        mosfetTempLabel.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(mosfetTempLabel);
-        mosfetTempTextField.setBounds(80, 320, 60, 20);
+        mosfetTempTextField.setBounds(80, posY, 60, 20);
         inverterOperatePanel.add(mosfetTempTextField);
-        readMosfetTempButton.setBounds(150, 320, 60, 20);
+        readMosfetTempButton.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(readMosfetTempButton);
+        posY += 30;
 
         headTempLabel.setText("焊头温度");
         headTempLabel.setForeground(Color.gray);
-        headTempLabel.setBounds(10, 350, 60, 20);
+        headTempLabel.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(headTempLabel);
-        headTempTextField.setBounds(80, 350, 60, 20);
+        headTempTextField.setBounds(80, posY, 60, 20);
         inverterOperatePanel.add(headTempTextField);
-        readHeadTempButton.setBounds(150, 350, 60, 20);
+        readHeadTempButton.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(readHeadTempButton);
+        posY += 30;
 
         voltage1Label.setText("电压1");
         voltage1Label.setForeground(Color.gray);
-        voltage1Label.setBounds(10, 380, 60, 20);
+        voltage1Label.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(voltage1Label);
-        voltage1TextField.setBounds(80, 380, 60, 20);
+        voltage1TextField.setBounds(80, posY, 60, 20);
         inverterOperatePanel.add(voltage1TextField);
-        readVoltage1Button.setBounds(150, 380, 60, 20);
+        readVoltage1Button.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(readVoltage1Button);
+        posY += 30;
 
         voltage2Label.setText("电压2");
         voltage2Label.setForeground(Color.gray);
-        voltage2Label.setBounds(10, 410, 60, 20);
+        voltage2Label.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(voltage2Label);
-        voltage2TextField.setBounds(80, 410, 60, 20);
+        voltage2TextField.setBounds(80, posY, 60, 20);
         inverterOperatePanel.add(voltage2TextField);
-        readVoltage2Button.setBounds(150, 410, 60, 20);
+        readVoltage2Button.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(readVoltage2Button);
+        posY += 30;
 
         current1Label.setText("电流接口");
         current1Label.setForeground(Color.gray);
-        current1Label.setBounds(10, 440, 60, 20);
+        current1Label.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(current1Label);
-        current1TextField.setBounds(80, 440, 60, 20);
+        current1TextField.setBounds(80, posY, 60, 20);
         inverterOperatePanel.add(current1TextField);
-        readCurrent1Button.setBounds(150, 440, 60, 20);
+        readCurrent1Button.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(readCurrent1Button);
+        posY += 30;
 
         errorLabel.setText("错误信息");
         errorLabel.setForeground(Color.gray);
-        errorLabel.setBounds(10, 470, 60, 20);
+        errorLabel.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(errorLabel);
-        errorTextArea.setBounds(80, 470, 160, 50);
+        errorTextArea.setBounds(80, posY, 160, 50);
         errorTextArea.setLineWrap(true);
         errorTextArea.setWrapStyleWord(true);
         inverterOperatePanel.add(errorTextArea);
-        readErrorButton.setBounds(250, 470, 60, 20);
+        readErrorButton.setBounds(250, posY, 60, 20);
         inverterOperatePanel.add(readErrorButton);
+        posY += 60;
 
         solderTimesLabel.setText("焊接次数");
         solderTimesLabel.setForeground(Color.gray);
-        solderTimesLabel.setBounds(10, 530, 60, 20);
+        solderTimesLabel.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(solderTimesLabel);
-        solderTimesTextField.setBounds(80, 530, 60, 20);
+        solderTimesTextField.setBounds(80, posY, 60, 20);
         inverterOperatePanel.add(solderTimesTextField);
-        readSolderTimesButton.setBounds(150, 530, 60, 20);
+        readSolderTimesButton.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(readSolderTimesButton);
-        writeSolderTimesButton.setBounds(220, 530, 60, 20);
+        writeSolderTimesButton.setBounds(220, posY, 60, 20);
         inverterOperatePanel.add(writeSolderTimesButton);
+        posY += 30;
+
+        debugLabel.setText("调试开关");
+        debugLabel.setForeground(Color.gray);
+        debugLabel.setBounds(10, posY, 60, 20);
+        inverterOperatePanel.add(debugLabel);
+        debugTextField.setBounds(80, posY, 60, 20);
+        inverterOperatePanel.add(debugTextField);
+        readDebugButton.setBounds(150, posY, 60, 20);
+        inverterOperatePanel.add(readDebugButton);
+        writeDebugButton.setBounds(220, posY, 60, 20);
+        inverterOperatePanel.add(writeDebugButton);
+        posY += 30;
+
+//        solderLogLabel.setText("焊接日志");
+//        solderLogLabel.setForeground(Color.gray);
+//        solderLogLabel.setBounds(10, posY, 60, 20);
+//        inverterOperatePanel.add(solderLogLabel);
+//        readSolderLogButton.setBounds(80, posY, 60, 20);
+//        inverterOperatePanel.add(readSolderLogButton);
     }
 
     private void initLogArea() {
@@ -407,6 +435,7 @@ public class MainFrame extends JFrame {
         readSolderTimesButton.setEnabled(trueFalse);
         writeSolderTimesButton.setEnabled(trueFalse);
         readMosfetTempButton.setEnabled(trueFalse);
+//        readSolderLogButton.setEnabled(trueFalse);
     };
 
     /**
@@ -538,7 +567,7 @@ public class MainFrame extends JFrame {
                                     ShowUtils.warningMessage("串口对象为空，监听失败");
                                 } else {
                                     receiveBuff = SerialCommTools.receiveData(serialport);
-                                    if(Objects.nonNull(receiveBuff)) {
+                                    if(Objects.nonNull(receiveBuff) && receiveBuff.length > 0) {
                                         log.info("收到数据 <<<<<<<<<< {}", SerialCommTools.byteArrayToStringFunction.apply(receiveBuff));
                                         if(CRCTools.checkModbusCRC(receiveBuff, receiveBuff.length)) {
                                             String addrString = inverterAddrTextField.getText();
@@ -688,6 +717,24 @@ public class MainFrame extends JFrame {
                 inverterReadConsumer.accept(17, 2);
             }
         });
+
+//        readSolderLogButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                byte[] command = new byte[5];
+//                String addrString = inverterAddrTextField.getText();
+//                int addrInt = Integer.parseInt(addrString);
+//                command[0] = (byte) addrInt;
+//                command[1] = (byte) 0xAA;
+//                command[2] = (byte) 0xAA;
+//                String crcHexString = CRCTools.getModbusCRC(command, 3);
+//                int crcH = SerialCommTools.hexStringToInt(crcHexString.substring(0, 2));
+//                int crcL = SerialCommTools.hexStringToInt(crcHexString.substring(2, 4));
+//                command[3] = (byte)crcH;
+//                command[4] = (byte)crcL;
+//                SerialCommTools.sendData(serialport, command);
+//            }
+//        });
 
         Runnable runnable = () -> {
             while (true) {
