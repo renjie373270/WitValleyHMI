@@ -120,7 +120,9 @@ public class MainFrame extends JFrame {
 //    private JLabel solderLogLabel = new JLabel();
 //    private JButton readSolderLogButton = new JButton("读取");
 
-    private JCheckBox headTempAutoReadCheckBox = new JCheckBox("自动读取");;
+    private JCheckBox headTempAutoReadCheckBox = new JCheckBox("自动读取");
+    private JCheckBox headTempAutoReadMOSCheckBox = new JCheckBox("自动读取");
+    private JCheckBox headTempAutoReadheadCheckBox = new JCheckBox("自动读取");
     private JLabel timestampLabel = new JLabel();
     private JTextField timestampTextField = new JTextField();
     private JButton readTimestampButton = new JButton("读取");
@@ -260,6 +262,10 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(boardTempTextField);
         readBoardTempButton.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(readBoardTempButton);
+
+        headTempAutoReadCheckBox.setBounds(220, posY, 80, 20);
+        inverterOperatePanel.add(headTempAutoReadCheckBox);
+
         posY += 30;
 
         mosfetTempLabel.setText("MOS温度");
@@ -270,6 +276,10 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(mosfetTempTextField);
         readMosfetTempButton.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(readMosfetTempButton);
+
+        headTempAutoReadMOSCheckBox.setBounds(220, posY, 80, 20);
+        inverterOperatePanel.add(headTempAutoReadMOSCheckBox);
+
         posY += 30;
 
         headTempLabel.setText("焊头温度");
@@ -280,6 +290,9 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(headTempTextField);
         readHeadTempButton.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(readHeadTempButton);
+
+        headTempAutoReadheadCheckBox.setBounds(220, posY, 80, 20);
+        inverterOperatePanel.add(headTempAutoReadheadCheckBox);
         posY += 30;
 
         voltage1Label.setText("电压1");
@@ -419,6 +432,9 @@ public class MainFrame extends JFrame {
         writeTimestampButton.setEnabled(trueFalse);
         readTimestampButton.setEnabled(trueFalse);
         headTempAutoReadCheckBox.setEnabled(trueFalse);
+        headTempAutoReadMOSCheckBox.setEnabled(trueFalse);
+        headTempAutoReadheadCheckBox.setEnabled(trueFalse);
+
         readPowerConsumptionButton.setEnabled(trueFalse);
         readTempFeedbackButton.setEnabled(trueFalse);
         writeTempFeedbackButton.setEnabled(trueFalse);
@@ -741,8 +757,19 @@ public class MainFrame extends JFrame {
                 try {
                     if(Objects.nonNull(serialport) && serialPortOpenButton.getText().equals("关闭串口")) {
                         if(headTempAutoReadCheckBox.isSelected()) {
+                            //todo 单独读取
+                            //inverterReadConsumer.accept(5, 1);
+
+                            inverterReadConsumer.accept(4, 1);
+                            Thread.sleep(300);
+                        }
+                        if(headTempAutoReadMOSCheckBox.isSelected()) {
                             inverterReadConsumer.accept(5, 1);
-                            Thread.sleep(10);
+                            Thread.sleep(300);
+                        }
+                        if(headTempAutoReadheadCheckBox.isSelected()) {
+                            inverterReadConsumer.accept(6, 1);
+                            Thread.sleep(300);
                         }
                     }
                     Thread.sleep(10);
