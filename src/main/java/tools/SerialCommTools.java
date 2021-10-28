@@ -22,8 +22,8 @@ public class SerialCommTools {
 
     /**
      * 获取串口列表
-     * */
-    public static List<String> getPortNamelist() {
+     */
+    public static List<String> getPortNamelist(String code) {
         // 获得当前所有可用串口
         Enumeration<CommPortIdentifier> portList = CommPortIdentifier.getPortIdentifiers();
         List<String> portNameList = Lists.newArrayList();
@@ -31,15 +31,20 @@ public class SerialCommTools {
         while (portList.hasMoreElements()) {
             String portName = portList.nextElement().getName();
             portNameList.add(portName);
-            log.info("发现串口，串口号 {}", portName);
+            if (!"English".equals(code)) {
+                log.info("Discovery serial，Serialnumber is{}", portName);
+            } else {
+                log.info("发现串口，串口号 {}", portName);
+            }
+
         }
         return portNameList;
     }
 
     /**
      * 打开串口
-     * */
-    public static SerialPort openPort(String portName, int baudrate) throws PortInUseException {
+     */
+    public static SerialPort openPort(String portName, int baudrate, String code) throws PortInUseException {
         try {
             // 通过端口名识别端口
             CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
@@ -55,25 +60,47 @@ public class SerialCommTools {
                     // 校验位：None
                     serialPort.setSerialPortParams(baudrate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1,
                             SerialPort.PARITY_NONE);
-                    log.info("打开串口成功，串口号 {} 波特率 {} 数据位 {} 停止位 {} 校验位 {}", portName, baudrate, 88, 1, "无");
+                    if (!"English".equals(code)) {
+                        log.info("Open serial port successfully，Serial  number {} Baud rate {} Data bit {} Stop bit {} Check bit {}", portName, baudrate, 88, 1, "null");
+
+                    } else {
+                        log.info("打开串口成功，串口号 {} 波特率 {} 数据位 {} 停止位 {} 校验位 {}", portName, baudrate, 88, 1, "无");
+
+                    }
                 } catch (UnsupportedCommOperationException e) {
-                    log.error("打开串口失败 {}", e.getLocalizedMessage());
+                    if (!"English".equals(code)) {
+                        log.error("Failed to open serial port {}", e.getLocalizedMessage());
+                    } else {
+                        log.error("打开串口失败 {}", e.getLocalizedMessage());
+                    }
+
                 }
                 return serialPort;
             }
         } catch (NoSuchPortException e1) {
-            log.error("打开串口失败 {}，串口不存在", e1.getLocalizedMessage());
+            if (!"English".equals(code)) {
+                log.error("Failed to open serial port {}，Serial port does not exist", e1.getLocalizedMessage());
+            } else {
+                log.error("打开串口失败 {}，串口不存在", e1.getLocalizedMessage());
+            }
+
         }
         return null;
     }
 
     /**
      * 关闭串口
-     * */
-    public static void closePort(SerialPort serialPort) {
-        if(Objects.nonNull(serialPort)) {
+     */
+    public static void closePort(SerialPort serialPort, String code) {
+        if (Objects.nonNull(serialPort)) {
             serialPort.close();
-            log.info("关闭串口 {} 成功", serialPort.getName());
+            if (!"English".equals(code)) {
+                log.info("Close serial{} success", serialPort.getName());
+
+            } else {
+                log.info("关闭串口 {} 成功", serialPort.getName());
+            }
+
         }
     }
 
@@ -81,15 +108,15 @@ public class SerialCommTools {
         StringBuilder builder = new StringBuilder();
         String sample = "0123456789ABCDEF";
         int index = 0;
-        for(byte data : dataArray) {
-            int daInt = (int)data;
+        for (byte data : dataArray) {
+            int daInt = (int) data;
             daInt &= 0x000000FF;
             int d1 = (daInt / 16);
             int d2 = (daInt % 16);
             Character c1 = sample.charAt(d1);
             Character c2 = sample.charAt(d2);
             index++;
-            if(index > 16) {
+            if (index > 16) {
                 break;
             }
             builder.append(c1.toString()).append(c2.toString()).append(" ");
@@ -99,16 +126,29 @@ public class SerialCommTools {
 
     /**
      * 发送数据
-     * */
-    public static void sendData(SerialPort serialPort, byte[] data) {
+     */
+    public static void sendData(SerialPort serialPort, byte[] data, String code) {
         OutputStream out = null;
         try {
             out = serialPort.getOutputStream();
             out.write(data);
             out.flush();
-            log.info("发送数据成功 >>>>>>>>>>>>>>>>>>>> {}", byteArrayToStringFunction.apply(data));
+
+
+            if (!"English".equals(code)) {
+                log.info("Sending data succeeded >>>>>>>>>>>>>>>>>>>> {}", byteArrayToStringFunction.apply(data));
+
+            } else {
+                log.info("发送数据成功 >>>>>>>>>>>>>>>>>>>> {}", byteArrayToStringFunction.apply(data));
+            }
+
         } catch (IOException e) {
-            log.error("发送数据失败 {}", e.getLocalizedMessage());
+            if (!"English".equals(code)) {
+                log.error("Failed to send data {}", e.getLocalizedMessage());
+            } else {
+                log.error("发送数据失败 {}", e.getLocalizedMessage());
+            }
+
         } finally {
             try {
                 if (Objects.nonNull(out)) {
@@ -116,15 +156,20 @@ public class SerialCommTools {
                     out = null;
                 }
             } catch (IOException e) {
-                log.error("关闭数据流失败 {}", e.getLocalizedMessage());
+                if (!"English".equals(code)) {
+                    log.error("Failed to close data stream {}", e.getLocalizedMessage());
+                } else {
+                    log.error("关闭数据流失败 {}", e.getLocalizedMessage());
+                }
+
             }
         }
     }
 
     /**
      * 接收数据
-     * */
-    public static byte[] receiveData(SerialPort serialPort) {
+     */
+    public static byte[] receiveData(SerialPort serialPort, String code) {
         InputStream in = null;
         byte[] bytes = new byte[1024];
         int i, index = 0;
@@ -134,32 +179,44 @@ public class SerialCommTools {
             byte[] readBuffer = new byte[1];
             int length = in.read(readBuffer);
             while (length > 0) {
-                for(i = 0; i < length; i++) {
+                for (i = 0; i < length; i++) {
                     bytes[index + i] = readBuffer[i];
                 }
                 index += length;
                 length = in.read(readBuffer);
-                if(length == 0) {//防止数据包被截断，延时后再读取一次
+                if (length == 0) {//防止数据包被截断，延时后再读取一次
                     SleepUtils.sleep(1);
                     length = in.read(readBuffer);
                 }
             }
             byte[] returnBytes = new byte[index];
-            for(i = 0; i < index; i++) {
+            for (i = 0; i < index; i++) {
                 returnBytes[i] = bytes[i];
             }
             return returnBytes;
         } catch (IOException e) {
-            log.error("IO 异常 {}", e.getLocalizedMessage());
+
+            if (!"English".equals(code)) {
+
+                log.error("IO exception  {}", e.getLocalizedMessage());
+            } else {
+                log.error("IO 异常 {}", e.getLocalizedMessage());
+            }
             e.printStackTrace();
         } finally {
             try {
-                if(Objects.nonNull(in)) {
+                if (Objects.nonNull(in)) {
                     in.close();
                     in = null;
                 }
             } catch (IOException e) {
-                log.error("IO 异常 {}", e.getLocalizedMessage());
+
+                if (!"English".equals(code)) {
+
+                    log.error("IO exception  {}", e.getLocalizedMessage());
+                } else {
+                    log.error("IO 异常 {}", e.getLocalizedMessage());
+                }
             }
         }
         return null;
@@ -168,11 +225,11 @@ public class SerialCommTools {
     private static Function<byte[], int[]> byteArrayToIntArrayFunction = dataArray -> {
         int[] intArray = new int[1024];
         int index = 0;
-        for(byte data : dataArray) {
-            int dataInt = (int)data;
+        for (byte data : dataArray) {
+            int dataInt = (int) data;
             dataInt &= 0x000000FF;
             intArray[index] = dataInt;
-            index ++;
+            index++;
         }
         return intArray;
     };
@@ -253,13 +310,19 @@ public class SerialCommTools {
         }
     }
 
-    public static void addListener(SerialPort serialPort, DataAvailableListener listener) {
+    public static void addListener(SerialPort serialPort, DataAvailableListener listener, String code) {
         try {
             serialPort.addEventListener(new SerialPortListener(listener));
             serialPort.notifyOnDataAvailable(true);
             serialPort.notifyOnBreakInterrupt(true);
-        }catch (TooManyListenersException e) {
-            log.error("接收监听出错 {}", e.getLocalizedMessage());
+        } catch (TooManyListenersException e) {
+
+            if (!"English".equals(code)) {
+                log.error("Receive listening error {}", e.getLocalizedMessage());
+            } else {
+                log.error("接收监听出错 {}", e.getLocalizedMessage());
+            }
+
         }
     }
 }

@@ -47,6 +47,8 @@ public class MainFrame extends JFrame {
     private JPanel inverterOperatePanel = new JPanel();
     private JTextArea mDataInput = new JTextArea();
     private JButton serialPortOpenButton = new JButton("打开串口");
+
+    private JButton serialEGCNOButton = new JButton("English");
     private byte[] receiveBuff;
     private JLabel inverterAddrLabel = new JLabel();
     private JTextField inverterAddrTextField = new JTextField();
@@ -116,18 +118,13 @@ public class MainFrame extends JFrame {
     private JTextField debugTextField = new JTextField();
     private JButton readDebugButton = new JButton("读取");
     private JButton writeDebugButton = new JButton("写入");
-    //焊接完成信号
-    private JLabel solderFinishLabel = new JLabel();
-    private JTextField solderFinishTextField = new JTextField();
-    private JButton readSolderFinishButton = new JButton("读取");
     //焊接日志读取
 //    private JLabel solderLogLabel = new JLabel();
 //    private JButton readSolderLogButton = new JButton("读取");
 
-    private JCheckBox boardTempAutoReadCheckBox = new JCheckBox("自动读取");
-    private JCheckBox mosfetTempAutoReadCheckBox = new JCheckBox("自动读取");
     private JCheckBox headTempAutoReadCheckBox = new JCheckBox("自动读取");
-    private JCheckBox solderFinishAutoReadCheckBox = new JCheckBox("自动读取");
+    private JCheckBox headTempAutoReadMOSCheckBox = new JCheckBox("自动读取");
+    private JCheckBox headTempAutoReadheadCheckBox = new JCheckBox("自动读取");
     private JLabel timestampLabel = new JLabel();
     private JTextField timestampTextField = new JTextField();
     private JButton readTimestampButton = new JButton("读取");
@@ -143,7 +140,7 @@ public class MainFrame extends JFrame {
 
     /**
      * 整体窗口
-     * */
+     */
     private void initView() {
         // 关闭程序
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -162,7 +159,7 @@ public class MainFrame extends JFrame {
         int posY = 20;
         // 操作
         inverterOperatePanel.setBorder(BorderFactory.createTitledBorder("逆变器参数"));
-        inverterOperatePanel.setBounds(10, 150, 400, 590);
+        inverterOperatePanel.setBounds(10, 150, 410, 590);
         inverterOperatePanel.setLayout(null);
         add(inverterOperatePanel);
 
@@ -171,167 +168,170 @@ public class MainFrame extends JFrame {
         inverterAddrLabel.setBounds(10, posY, 60, 20);
         inverterOperatePanel.add(inverterAddrLabel);
         inverterAddrTextField.setText("1");
-        inverterAddrTextField.setBounds(80, posY, 40, 20);
+        inverterAddrTextField.setBounds(150, posY, 40, 20);
         inverterOperatePanel.add(inverterAddrTextField);
         posY += 30;
 
         setResenantFreqLabel.setText("谐振频率");
         setResenantFreqLabel.setForeground(Color.gray);
-        setResenantFreqLabel.setBounds(10, posY, 60, 20);
+        setResenantFreqLabel.setBounds(10, posY, 120, 20);
         inverterOperatePanel.add(setResenantFreqLabel);
-        resonantFreqTextField.setBounds(80, posY, 60, 20);
+        resonantFreqTextField.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(resonantFreqTextField);
-        readResonantFreqButton.setBounds(150, posY, 60, 20);
+        readResonantFreqButton.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readResonantFreqButton);
-        writeResonantFreqButton.setBounds(220, posY, 60, 20);
+        writeResonantFreqButton.setBounds(310, posY, 80, 20);
         inverterOperatePanel.add(writeResonantFreqButton);
         posY += 30;
 
         powerConsumptionLabel.setText("用电量");
         powerConsumptionLabel.setForeground(Color.gray);
-        powerConsumptionLabel.setBounds(10, posY, 60, 20);
+        powerConsumptionLabel.setBounds(10, posY, 150, 20);
         inverterOperatePanel.add(powerConsumptionLabel);
-        powerConsumptionTextField.setBounds(80, posY, 60, 20);
+        powerConsumptionTextField.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(powerConsumptionTextField);
-        readPowerConsumptionButton.setBounds(150, posY, 60, 20);
+        readPowerConsumptionButton.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readPowerConsumptionButton);
         posY += 30;
 
         setCurrentLabel.setText("设定电流");
         setCurrentLabel.setForeground(Color.gray);
-        setCurrentLabel.setBounds(10, posY, 60, 20);
+        setCurrentLabel.setBounds(10, posY, 150, 20);
         inverterOperatePanel.add(setCurrentLabel);
-        setCurrentTextField.setBounds(80, posY, 60, 20);
+        setCurrentTextField.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(setCurrentTextField);
-        readSetCurrentButton.setBounds(150, posY, 60, 20);
+        readSetCurrentButton.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readSetCurrentButton);
-        writeSetCurrentButton.setBounds(220, posY, 60, 20);
+        writeSetCurrentButton.setBounds(310, posY, 80, 20);
         inverterOperatePanel.add(writeSetCurrentButton);
         posY += 30;
 
         tempFeedbackLabel.setText("温度反馈");
         tempFeedbackLabel.setForeground(Color.gray);
-        tempFeedbackLabel.setBounds(10, posY, 60, 20);
+        tempFeedbackLabel.setBounds(10, posY, 150, 20);
         inverterOperatePanel.add(tempFeedbackLabel);
         tempFeedbackComBox.setFocusable(false);
-        tempFeedbackComBox.setBounds(80, posY, 60, 20);
+        tempFeedbackComBox.setBounds(150, posY, 60, 20);
         tempFeedbackComBox.addItem("NONE");
         inverterOperatePanel.add(tempFeedbackComBox);
-        readTempFeedbackButton.setBounds(150, posY, 60, 20);
+        readTempFeedbackButton.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readTempFeedbackButton);
-        writeTempFeedbackButton.setBounds(220, posY, 60, 20);
+        writeTempFeedbackButton.setBounds(310, posY, 80, 20);
         inverterOperatePanel.add(writeTempFeedbackButton);
         posY += 30;
 
         currentFeedbackLabel.setText("电流控制");
         currentFeedbackLabel.setForeground(Color.gray);
-        currentFeedbackLabel.setBounds(10, posY, 60, 20);
+        currentFeedbackLabel.setBounds(10, posY, 150, 20);
         inverterOperatePanel.add(currentFeedbackLabel);
         currentFeedbackComBox.setFocusable(false);
-        currentFeedbackComBox.setBounds(80, posY, 60, 20);
+        currentFeedbackComBox.setBounds(150, posY, 60, 20);
         currentFeedbackComBox.addItem("NONE");
         inverterOperatePanel.add(currentFeedbackComBox);
-        readCurrentFeedbackButton.setBounds(150, posY, 60, 20);
+        readCurrentFeedbackButton.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readCurrentFeedbackButton);
-        writeCurrentFeedbackButton.setBounds(220, posY, 60, 20);
+        writeCurrentFeedbackButton.setBounds(310, posY, 80, 20);
         inverterOperatePanel.add(writeCurrentFeedbackButton);
         posY += 30;
 
         timestampLabel.setText("出厂时间");
         timestampLabel.setForeground(Color.gray);
-        timestampLabel.setBounds(10, posY, 60, 20);
+        timestampLabel.setBounds(10, posY, 150, 20);
         inverterOperatePanel.add(timestampLabel);
-        timestampTextField.setBounds(80, posY, 160, 20);
+        timestampTextField.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(timestampTextField);
-        readTimestampButton.setBounds(250, posY, 60, 20);
+        readTimestampButton.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readTimestampButton);
-        writeTimestampButton.setBounds(320, posY, 60, 20);
+        writeTimestampButton.setBounds(310, posY, 80, 20);
         inverterOperatePanel.add(writeTimestampButton);
         posY += 30;
 
         stopLabel.setText("停用模式");
         stopLabel.setForeground(Color.gray);
-        stopLabel.setBounds(10, posY, 60, 20);
+        stopLabel.setBounds(10, posY, 150, 20);
         inverterOperatePanel.add(stopLabel);
-        stopTextField.setBounds(80, posY, 60, 20);
+        stopTextField.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(stopTextField);
-        writeStopButton.setBounds(220, posY, 60, 20);
+        writeStopButton.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(writeStopButton);
         posY += 30;
 
         boardTempLabel.setText("主板温度");
         boardTempLabel.setForeground(Color.gray);
-        boardTempLabel.setBounds(10, posY, 60, 20);
+        boardTempLabel.setBounds(10, posY, 150, 20);
         inverterOperatePanel.add(boardTempLabel);
-        boardTempTextField.setBounds(80, posY, 60, 20);
+        boardTempTextField.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(boardTempTextField);
-        readBoardTempButton.setBounds(150, posY, 60, 20);
+        readBoardTempButton.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readBoardTempButton);
 
-        boardTempAutoReadCheckBox.setBounds(220, posY, 80, 20);
-        inverterOperatePanel.add(boardTempAutoReadCheckBox);
+        headTempAutoReadCheckBox.setBounds(310, posY, 90, 20);
+        inverterOperatePanel.add(headTempAutoReadCheckBox);
 
         posY += 30;
 
         mosfetTempLabel.setText("MOS温度");
         mosfetTempLabel.setForeground(Color.gray);
-        mosfetTempLabel.setBounds(10, posY, 60, 20);
+        mosfetTempLabel.setBounds(10, posY, 150, 20);
         inverterOperatePanel.add(mosfetTempLabel);
-        mosfetTempTextField.setBounds(80, posY, 60, 20);
+        mosfetTempTextField.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(mosfetTempTextField);
-        readMosfetTempButton.setBounds(150, posY, 60, 20);
+        readMosfetTempButton.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readMosfetTempButton);
-        mosfetTempAutoReadCheckBox.setBounds(220, posY, 80, 20);
-        inverterOperatePanel.add(mosfetTempAutoReadCheckBox);
+
+        headTempAutoReadMOSCheckBox.setBounds(310, posY, 90, 20);
+        inverterOperatePanel.add(headTempAutoReadMOSCheckBox);
+
         posY += 30;
 
         headTempLabel.setText("焊头温度");
         headTempLabel.setForeground(Color.gray);
-        headTempLabel.setBounds(10, posY, 60, 20);
+        headTempLabel.setBounds(10, posY, 150, 20);
         inverterOperatePanel.add(headTempLabel);
-        headTempTextField.setBounds(80, posY, 60, 20);
+        headTempTextField.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(headTempTextField);
-        readHeadTempButton.setBounds(150, posY, 60, 20);
+        readHeadTempButton.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readHeadTempButton);
-        headTempAutoReadCheckBox.setBounds(220, posY, 80, 20);
-        inverterOperatePanel.add(headTempAutoReadCheckBox);
+
+        headTempAutoReadheadCheckBox.setBounds(310, posY, 90, 20);
+        inverterOperatePanel.add(headTempAutoReadheadCheckBox);
         posY += 30;
 
         voltage1Label.setText("电压1");
         voltage1Label.setForeground(Color.gray);
-        voltage1Label.setBounds(10, posY, 60, 20);
+        voltage1Label.setBounds(10, posY, 150, 20);
         inverterOperatePanel.add(voltage1Label);
-        voltage1TextField.setBounds(80, posY, 60, 20);
+        voltage1TextField.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(voltage1TextField);
-        readVoltage1Button.setBounds(150, posY, 60, 20);
+        readVoltage1Button.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readVoltage1Button);
         posY += 30;
 
         voltage2Label.setText("电压2");
         voltage2Label.setForeground(Color.gray);
-        voltage2Label.setBounds(10, posY, 60, 20);
+        voltage2Label.setBounds(10, posY, 150, 20);
         inverterOperatePanel.add(voltage2Label);
-        voltage2TextField.setBounds(80, posY, 60, 20);
+        voltage2TextField.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(voltage2TextField);
-        readVoltage2Button.setBounds(150, posY, 60, 20);
+        readVoltage2Button.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readVoltage2Button);
         posY += 30;
 
         current1Label.setText("电流接口");
         current1Label.setForeground(Color.gray);
-        current1Label.setBounds(10, posY, 60, 20);
+        current1Label.setBounds(10, posY, 150, 20);
         inverterOperatePanel.add(current1Label);
-        current1TextField.setBounds(80, posY, 60, 20);
+        current1TextField.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(current1TextField);
-        readCurrent1Button.setBounds(150, posY, 60, 20);
+        readCurrent1Button.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readCurrent1Button);
         posY += 30;
 
         errorLabel.setText("错误信息");
         errorLabel.setForeground(Color.gray);
-        errorLabel.setBounds(10, posY, 60, 20);
+        errorLabel.setBounds(10, posY, 150, 20);
         inverterOperatePanel.add(errorLabel);
-        errorTextArea.setBounds(80, posY, 160, 50);
+        errorTextArea.setBounds(150, posY, 160, 50);
         errorTextArea.setLineWrap(true);
         errorTextArea.setWrapStyleWord(true);
         inverterOperatePanel.add(errorTextArea);
@@ -341,38 +341,26 @@ public class MainFrame extends JFrame {
 
         solderTimesLabel.setText("焊接次数");
         solderTimesLabel.setForeground(Color.gray);
-        solderTimesLabel.setBounds(10, posY, 60, 20);
+        solderTimesLabel.setBounds(10, posY, 1501, 20);
         inverterOperatePanel.add(solderTimesLabel);
-        solderTimesTextField.setBounds(80, posY, 60, 20);
+        solderTimesTextField.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(solderTimesTextField);
-        readSolderTimesButton.setBounds(150, posY, 60, 20);
+        readSolderTimesButton.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readSolderTimesButton);
-        writeSolderTimesButton.setBounds(220, posY, 60, 20);
+        writeSolderTimesButton.setBounds(310, posY, 80, 20);
         inverterOperatePanel.add(writeSolderTimesButton);
         posY += 30;
 
         debugLabel.setText("调试开关");
         debugLabel.setForeground(Color.gray);
-        debugLabel.setBounds(10, posY, 60, 20);
+        debugLabel.setBounds(10, posY, 150, 20);
         inverterOperatePanel.add(debugLabel);
-        debugTextField.setBounds(80, posY, 60, 20);
+        debugTextField.setBounds(150, posY, 60, 20);
         inverterOperatePanel.add(debugTextField);
-        readDebugButton.setBounds(150, posY, 60, 20);
+        readDebugButton.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readDebugButton);
-        writeDebugButton.setBounds(220, posY, 60, 20);
+        writeDebugButton.setBounds(310, posY, 80, 20);
         inverterOperatePanel.add(writeDebugButton);
-        posY += 30;
-
-        solderFinishLabel.setText("焊接完成");
-        solderFinishLabel.setForeground(Color.gray);
-        solderFinishLabel.setBounds(10, posY, 60, 20);
-        inverterOperatePanel.add(solderFinishLabel);
-        solderFinishTextField.setBounds(80, posY, 60, 20);
-        inverterOperatePanel.add(solderFinishTextField);
-        readSolderFinishButton.setBounds(150, posY, 60, 20);
-        inverterOperatePanel.add(readSolderFinishButton);
-        solderFinishAutoReadCheckBox.setBounds(220, posY, 80, 20);
-        inverterOperatePanel.add(solderFinishAutoReadCheckBox);
         posY += 30;
 
 //        solderLogLabel.setText("焊接日志");
@@ -399,38 +387,43 @@ public class MainFrame extends JFrame {
 
     /**
      * 串口号显示区域
-     * */
+     */
     private void initCommNumberDisplayArea() {
         int index;
         //边框
         serialPortBoardPanel.setBorder(BorderFactory.createTitledBorder("串口设置"));
-        serialPortBoardPanel.setBounds(10, 10, 300, 100);
+        serialPortBoardPanel.setBounds(10, 10, 320, 100);
         serialPortBoardPanel.setLayout(null);
         add(serialPortBoardPanel);
 
         //串口标签
         serialPortNameLabel.setText("串口号");
         serialPortNameLabel.setForeground(Color.gray);
-        serialPortNameLabel.setBounds(10, 25, 40, 20);
+        serialPortNameLabel.setBounds(10, 25, 120, 20);
         serialPortBoardPanel.add(serialPortNameLabel);
 
         serialPortNameComboBox.setFocusable(false);
-        serialPortNameComboBox.setBounds(60, 25, 100, 20);
+        serialPortNameComboBox.setBounds(80, 25, 100, 20);
         serialPortBoardPanel.add(serialPortNameComboBox);
 
         //打开串口
         serialPortOpenButton.setFocusable(false);
-        serialPortOpenButton.setBounds(180, 25, 90, 20);
+        serialPortOpenButton.setBounds(190, 25, 110, 20);
         serialPortBoardPanel.add(serialPortOpenButton);
+
+        serialEGCNOButton.setFocusable(false);
+        serialEGCNOButton.setBounds(190, 60, 110, 20);
+        serialPortBoardPanel.add(serialEGCNOButton);
+
 
         //波特率标签
         serialPortBaudLabel.setText("波特率");
         serialPortBaudLabel.setForeground(Color.gray);
-        serialPortBaudLabel.setBounds(10, 60, 40, 20);
+        serialPortBaudLabel.setBounds(10, 60, 120, 20);
         serialPortBoardPanel.add(serialPortBaudLabel);
 
         serialPortBaudrateComboBox.setFocusable(false);
-        serialPortBaudrateComboBox.setBounds(60, 60, 100, 20);
+        serialPortBaudrateComboBox.setBounds(80, 60, 100, 20);
         serialPortBoardPanel.add(serialPortBaudrateComboBox);
 
         initInverterOperateArea();
@@ -445,10 +438,9 @@ public class MainFrame extends JFrame {
         readHeadTempButton.setEnabled(trueFalse);
         writeTimestampButton.setEnabled(trueFalse);
         readTimestampButton.setEnabled(trueFalse);
-        boardTempAutoReadCheckBox.setEnabled(trueFalse);
-        mosfetTempAutoReadCheckBox.setEnabled(trueFalse);
         headTempAutoReadCheckBox.setEnabled(trueFalse);
-        solderFinishAutoReadCheckBox.setEnabled(trueFalse);
+        headTempAutoReadMOSCheckBox.setEnabled(trueFalse);
+        headTempAutoReadheadCheckBox.setEnabled(trueFalse);
 
         readPowerConsumptionButton.setEnabled(trueFalse);
         readTempFeedbackButton.setEnabled(trueFalse);
@@ -467,20 +459,24 @@ public class MainFrame extends JFrame {
         writeSolderTimesButton.setEnabled(trueFalse);
         readMosfetTempButton.setEnabled(trueFalse);
 //        readSolderLogButton.setEnabled(trueFalse);
-        readSolderFinishButton.setEnabled(trueFalse);
     };
 
     /**
      * 按钮监听
-     * */
+     */
     private void initListener() {
         // 串口选择
         serialPortNameComboBox.addPopupMenuListener(new PopupMenuListener() {
             @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-                serialPortNameList = SerialCommTools.getPortNamelist();
+                serialPortNameList = SerialCommTools.getPortNamelist(serialEGCNOButton.getText());
                 if (serialPortNameList.size() < 1) {
-                    ShowUtils.warningMessage("没有搜索到有效串口！");
+
+                    if (!"English".equals(serialEGCNOButton.getText())) {
+                        ShowUtils.warningMessage("No valid serial port is found！");
+                    }else {
+                        ShowUtils.warningMessage("没有搜索到有效串口！");
+                    }
                 } else {
                     int index = serialPortNameComboBox.getSelectedIndex();
                     serialPortNameComboBox.removeAllItems();
@@ -506,51 +502,102 @@ public class MainFrame extends JFrame {
         };
 
         Consumer<byte[]> inverterReceiveConsumer = dataArray -> {
-            if(dataArray[1] == 0x03) {
+            if (dataArray[1] == 0x03) {
                 int size = dataArray[2];
-                if(size == 2) {
+                if (size == 2) {
                     int data = dataArray[3] & 0xFF;
                     data <<= 8;
                     data |= dataArray[4] & 0xFF;
                     switch (startAddress) {
-                        case 1: resonantFreqTextField.setText(Integer.toString(data) + "KHz"); break;
-                        case 2: powerConsumptionTextField.setText(Integer.toString(data) + "J"); break;
-                        case 3: setCurrentTextField.setText(Integer.toString(data) + "mA"); break;
-                        case 4: boardTempTextField.setText(Integer.toString(data) + "℃");break;
-                        case 5: mosfetTempTextField.setText(Integer.toString(data) + "℃");break;
-                        case 6: headTempTextField.setText(Integer.toString(data) + "℃");break;
-                        case 14: voltage1TextField.setText(Integer.toString(data) + "mV");break;
-                        case 15: voltage2TextField.setText(Integer.toString(data) + "mV");break;
-                        case 16: current1TextField.setText(Integer.toString(data) + "mA");break;
-                        case 19: debugTextField.setText(Integer.toString(data));break;
-                        case 20: solderFinishTextField.setText(Integer.toString(data));break;
+                        case 1:
+                            resonantFreqTextField.setText(Integer.toString(data) + "KHz");
+                            break;
+                        case 2:
+                            powerConsumptionTextField.setText(Integer.toString(data) + "J");
+                            break;
+                        case 3:
+                            setCurrentTextField.setText(Integer.toString(data) + "mA");
+                            break;
+                        case 4:
+                            boardTempTextField.setText(Integer.toString(data) + "℃");
+                            break;
+                        case 5:
+                            mosfetTempTextField.setText(Integer.toString(data) + "℃");
+                            break;
+                        case 6:
+                            headTempTextField.setText(Integer.toString(data) + "℃");
+                            break;
+                        case 14:
+                            voltage1TextField.setText(Integer.toString(data) + "mV");
+                            break;
+                        case 15:
+                            voltage2TextField.setText(Integer.toString(data) + "mV");
+                            break;
+                        case 16:
+                            current1TextField.setText(Integer.toString(data) + "mA");
+                            break;
+                        case 19:
+                            debugTextField.setText(Integer.toString(data));
+                            break;
                         case 7:
                             StringBuilder builder = new StringBuilder();
-                            if(data == 0) {
-                                errorTextArea.setText("无");
+                            if (data == 0) {
+
+                                if (!"English".equals(serialEGCNOButton.getText())) {
+                                    builder.append("null");
+                                }else {
+                                    errorTextArea.setText("无");
+                                }
                             } else {
-                                if((data & (1 << 0)) != 0) {
-                                    builder.append("电源短路,");
+                                if ((data & (1 << 0)) != 0) {
+
+                                    if (!"English".equals(serialEGCNOButton.getText())) {
+                                        builder.append("The power supply circuit");
+                                    }else {
+                                        builder.append("电源短路,");
+                                    }
                                 }
-                                if((data & (1 << 1)) != 0) {
-                                    builder.append("焊接电流低,");
+                                if ((data & (1 << 1)) != 0) {
+
+                                    if (!"English".equals(serialEGCNOButton.getText())) {
+                                        builder.append("Low welding current");
+                                    }else {
+                                        builder.append("焊接电流低,");
+                                    }
                                 }
-                                if((data & (1 << 2)) != 0) {
-                                    builder.append("主板温度异常,");
+                                if ((data & (1 << 2)) != 0) {
+
+                                    if (!"English".equals(serialEGCNOButton.getText())) {
+                                        builder.append("Abnormal mainboard temperature");
+                                    }else {
+                                        builder.append("主板温度异常,");
+                                    }
                                 }
-                                if((data & (1 << 3)) != 0) {
-                                    builder.append("MOS管温度异常,");
+                                if ((data & (1 << 3)) != 0) {
+
+                                    if (!"English".equals(serialEGCNOButton.getText())) {
+                                        builder.append("The MOS tube temperature is abnormal");
+                                    }else {
+                                        builder.append("MOS管温度异常,");
+                                    }
                                 }
-                                if((data & (1 << 4)) != 0) {
-                                    builder.append("焊头温度异常");
+                                if ((data & (1 << 4)) != 0) {
+
+
+                                    if (!"English".equals(serialEGCNOButton.getText())) {
+                                        builder.append("The welding head temperature is abnormal");
+                                    }else {
+                                        builder.append("焊头温度异常");
+                                    }
                                 }
                                 errorTextArea.setText(builder.toString());
                             }
                             break;
-                        default: break;
+                        default:
+                            break;
                     }
-                }else if(size == 4) {
-                    if(startAddress == 11) {
+                } else if (size == 4) {
+                    if (startAddress == 11) {
                         int data = dataArray[3] & 0xFF;
                         data <<= 8;
                         data |= dataArray[4] & 0xFF;
@@ -562,7 +609,7 @@ public class MainFrame extends JFrame {
                         LocalDateTime localDateTime = LocalDateTime.ofEpochSecond(timestamp, 0, ZoneOffset.ofHours(8));
                         timestampTextField.setText(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                     }
-                    if(startAddress == 17) {
+                    if (startAddress == 17) {
                         long data = dataArray[3] & 0xFF;
                         data <<= 8;
                         data |= dataArray[4] & 0xFF;
@@ -573,55 +620,209 @@ public class MainFrame extends JFrame {
                         solderTimesTextField.setText(Long.toString(data));
                     }
                 }
-            }else if(dataArray[1] == 0x05){
+            } else if (dataArray[1] == 0x05) {
 
             }
         };
 
+        serialEGCNOButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if ("English".equals(serialEGCNOButton.getText())) {
+                    serialEGCNOButton.setText("简体中文");
+                    serialPortNameLabel.setText("Serial No");
+                    serialPortBaudLabel.setText("Baud Rate");
+                    inverterAddrLabel.setText("station No");
+                    inverterOperatePanel.setBorder(BorderFactory.createTitledBorder("Inverter Parameters"));
+                    setResenantFreqLabel.setText("Resonant Frequency");
+                    powerConsumptionLabel.setText("Electricity Consumption");
+                    setCurrentLabel.setText("Set Current");
+                    tempFeedbackLabel.setText("Temperature Feedback");
+                    currentFeedbackLabel.setText("Current Control");
+                    timestampLabel.setText("Delivery Time");
+                    stopLabel.setText("Disable Mode");
+                    boardTempLabel.setText("CPU Temperature");
+                    mosfetTempLabel.setText("MOS Temperature");
+                    headTempLabel.setText("Head Temperature");
+                    voltage1Label.setText("Voltage 1");
+                    voltage2Label.setText("Voltage 2");
+                    current1Label.setText("Current Interface");
+                    errorLabel.setText("Error Message");
+                    solderTimesLabel.setText("Welding Number");
+                    debugLabel.setText("Debug Switch");
+                    logPanel.setBorder(BorderFactory.createTitledBorder("Log"));
+                    serialPortBoardPanel.setBorder(BorderFactory.createTitledBorder("SerialPort Settings"));
 
+
+                    serialPortOpenButton.setText("Open Serial");
+                    readResonantFreqButton.setText("Read");
+                    readResonantFreqButton.setText("Read");
+                    writeResonantFreqButton.setText("Write");
+                    readPowerConsumptionButton.setText("Read");
+                    readSetCurrentButton.setText("Read");
+                    writeSetCurrentButton.setText("Write");
+                    readTempFeedbackButton.setText("Read");
+                    writeTempFeedbackButton.setText("Write");
+                    readCurrentFeedbackButton.setText("Read");
+                    writeCurrentFeedbackButton.setText("Write");
+                    writeStopButton.setText("setting");
+                    readBoardTempButton.setText("Read");
+                    readMosfetTempButton.setText("Read");
+                    readHeadTempButton.setText("Read");
+                    readVoltage1Button.setText("Read");
+                    readVoltage2Button.setText("Read");
+                    readCurrent1Button.setText("Read");
+                    readErrorButton.setText("Read");
+                    readSolderTimesButton.setText("Read");
+                    writeSolderTimesButton.setText("Write");
+                    readDebugButton.setText("Read");
+                    writeDebugButton.setText("Write");
+                    headTempAutoReadCheckBox.setText("Auto Read");
+                    headTempAutoReadMOSCheckBox.setText("Auto Read");
+                    headTempAutoReadheadCheckBox.setText("Auto Read");
+                    readTimestampButton.setText("Read");
+                    writeTimestampButton.setText("Write");
+                    setTitle("Electromagnetic welding equipment control software v1.0");
+
+
+
+
+                }
+                else{
+                    serialEGCNOButton.setText("English");
+                    serialPortNameLabel.setText("串口号");
+                    serialPortBaudLabel.setText("波特率");
+                    inverterAddrLabel.setText("地址");
+                    inverterOperatePanel.setBorder(BorderFactory.createTitledBorder("逆变器参数"));
+                    setResenantFreqLabel.setText("谐振频率");
+                    powerConsumptionLabel.setText("用电量");
+                    setCurrentLabel.setText("设定电流");
+                    tempFeedbackLabel.setText("温度反馈");
+                    currentFeedbackLabel.setText("电流控制");
+                    timestampLabel.setText("出厂时间");
+                    stopLabel.setText("停用模式");
+                    boardTempLabel.setText("主板温度");
+                    mosfetTempLabel.setText("MOS温度");
+                    headTempLabel.setText("焊头温度");
+                    voltage1Label.setText("电压1");
+                    voltage2Label.setText("电压2");
+                    current1Label.setText("电流接口");
+                    errorLabel.setText("错误信息");
+                    solderTimesLabel.setText("焊接次数");
+                    debugLabel.setText("调试开关");
+                    logPanel.setBorder(BorderFactory.createTitledBorder("日志"));
+                    serialPortBoardPanel.setBorder(BorderFactory.createTitledBorder("串口设置"));
+
+
+                    serialPortOpenButton.setText("打开串口");
+                    readResonantFreqButton.setText("读取");
+                    readResonantFreqButton.setText("读取");
+                    writeResonantFreqButton.setText("写入");
+                    readPowerConsumptionButton.setText("读取");
+                    readSetCurrentButton.setText("读取");
+                    writeSetCurrentButton.setText("写入");
+                    readTempFeedbackButton.setText("读取");
+                    writeTempFeedbackButton.setText("写入");
+                    readCurrentFeedbackButton.setText("读取");
+                    writeCurrentFeedbackButton.setText("写入");
+                    writeStopButton.setText("设置");
+                    readBoardTempButton.setText("读取");
+                    readMosfetTempButton.setText("读取");
+                    readHeadTempButton.setText("读取");
+                    readVoltage1Button.setText("读取");
+                    readVoltage2Button.setText("读取");
+                    readCurrent1Button.setText("读取");
+                    readErrorButton.setText("读取");
+                    readSolderTimesButton.setText("读取");
+                    writeSolderTimesButton.setText("写入");
+                    readDebugButton.setText("读取");
+                    writeDebugButton.setText("写入");
+                    headTempAutoReadCheckBox.setText("自动读取");
+                    headTempAutoReadMOSCheckBox.setText("自动读取");
+                    headTempAutoReadheadCheckBox.setText("自动读取");
+                    readTimestampButton.setText("读取");
+                    writeTimestampButton.setText("写入");
+                    setTitle("电磁焊接设备控制软件 v1.0");
+                }
+            }
+        });
 
         // 打开|关闭串口
         serialPortOpenButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if ("打开串口".equals(serialPortOpenButton.getText()) && Objects.nonNull(serialPortOpenButton)) {
+                if (("打开串口".equals(serialPortOpenButton.getText())||"Open Serial".equals(serialPortOpenButton.getText())) && Objects.nonNull(serialPortOpenButton)) {
                     String serialPortName = serialPortNameComboBox.getSelectedItem().toString();
                     int serialPortBaudRate = Integer.parseInt(serialPortBaudrateComboBox.getSelectedItem().toString());
                     try {
-                        serialport = SerialCommTools.openPort(serialPortName, serialPortBaudRate);
-                        serialPortOpenButton.setText("关闭串口");
+                        serialport = SerialCommTools.openPort(serialPortName, serialPortBaudRate,serialEGCNOButton.getText());
+                        if (!"English".equals(serialEGCNOButton.getText())) {
+                            serialPortOpenButton.setText("Close Serial");
+                        }else {
+                            serialPortOpenButton.setText("关闭串口");
+                        }
                         consumerButtonDisplay.accept(true);
                         //接收监听
                         SerialCommTools.addListener(serialport, new SerialCommTools.DataAvailableListener() {
                             @Override
                             public void dataAvailable() {
-                                if(Objects.isNull(serialport)) {
-                                    ShowUtils.warningMessage("串口对象为空，监听失败");
+                                if (Objects.isNull(serialport)) {
+                                    if (!"English".equals(serialEGCNOButton.getText())) {
+                                        serialPortOpenButton.setText("The serial port object is empty. Listening failed");
+                                    }else {
+                                        ShowUtils.warningMessage("串口对象为空，监听失败");
+                                    }
+
                                 } else {
-                                    receiveBuff = SerialCommTools.receiveData(serialport);
-                                    if(Objects.nonNull(receiveBuff) && receiveBuff.length > 0) {
-                                        log.info("收到数据 <<<<<<<<<< {}", SerialCommTools.byteArrayToStringFunction.apply(receiveBuff));
-                                        if(CRCTools.checkModbusCRC(receiveBuff, receiveBuff.length)) {
+                                    receiveBuff = SerialCommTools.receiveData(serialport,serialEGCNOButton.getText());
+                                    if (Objects.nonNull(receiveBuff) && receiveBuff.length > 0) {
+                                        if (!"English".equals(serialEGCNOButton.getText())) {
+
+                                            log.info("Receive  Data <<<<<<<<<< {}", SerialCommTools.byteArrayToStringFunction.apply(receiveBuff));
+                                        }else {
+                                            log.info("收到数据 <<<<<<<<<< {}", SerialCommTools.byteArrayToStringFunction.apply(receiveBuff));
+                                        }
+
+                                        if (CRCTools.checkModbusCRC(receiveBuff, receiveBuff.length,serialEGCNOButton.getText())) {
                                             String addrString = inverterAddrTextField.getText();
                                             int addr = Integer.parseInt(addrString);
-                                            if(receiveBuff[0] == addr) {
+                                            if (receiveBuff[0] == addr) {
                                                 inverterReceiveConsumer.accept(receiveBuff);
                                             }
                                         } else {
-                                            log.error("CRC 校验失败 ********************");
+                                            if (!"English".equals(serialEGCNOButton.getText())) {
+
+                                                log.error("CRC Check Failure ********************");
+                                            }else {
+                                                log.error("CRC 校验失败 ********************");
+                                            }
+
                                         }
                                     }
                                 }
                             }
-                        });
-                    }catch (PortInUseException e2) {
-                        ShowUtils.warningMessage("打开失败，串口被占用");
-                        log.error("打开串口{}失败，串口被占用{}", serialPortName, e2.getLocalizedMessage());
+                        },serialEGCNOButton.getText());
+                    } catch (PortInUseException e2) {
+                        if (!"English".equals(serialEGCNOButton.getText())) {
+
+                            ShowUtils.warningMessage("The serial port is occupied. Procedure");
+                            log.error("Open serial{}failure，The serial port is occupied{}", serialPortName, e2.getLocalizedMessage());
+                        }else {
+                            ShowUtils.warningMessage("打开失败，串口被占用");
+                            log.error("打开串口{}失败，串口被占用{}", serialPortName, e2.getLocalizedMessage());
+                        }
+
                     }
                 } else {
-                    SerialCommTools.closePort(serialport);
-                    serialPortOpenButton.setText("打开串口");
+                    SerialCommTools.closePort(serialport,serialEGCNOButton.getText());
+                    if (!"English".equals(serialEGCNOButton.getText())) {
+                        serialPortOpenButton.setText("Open Serial");
+
+                    }else {
+                        serialPortOpenButton.setText("打开串口");
+                    }
+
                     consumerButtonDisplay.accept(false);
                 }
             }
@@ -640,9 +841,9 @@ public class MainFrame extends JFrame {
             String crcHexString = CRCTools.getModbusCRC(command, 6);
             int crcH = SerialCommTools.hexStringToInt(crcHexString.substring(0, 2));
             int crcL = SerialCommTools.hexStringToInt(crcHexString.substring(2, 4));
-            command[6] = (byte)crcH;
-            command[7] = (byte)crcL;
-            SerialCommTools.sendData(serialport, command);
+            command[6] = (byte) crcH;
+            command[7] = (byte) crcL;
+            SerialCommTools.sendData(serialport, command,serialEGCNOButton.getText());
             startAddress = start;
         };
 
@@ -751,13 +952,6 @@ public class MainFrame extends JFrame {
             }
         });
 
-        readSolderFinishButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(20, 1);
-            }
-        });
-
 //        readSolderLogButton.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
@@ -779,26 +973,25 @@ public class MainFrame extends JFrame {
         Runnable runnable = () -> {
             while (true) {
                 try {
-                    if(Objects.nonNull(serialport) && serialPortOpenButton.getText().equals("关闭串口")) {
-                        if(boardTempAutoReadCheckBox.isSelected()) {
+                    if (Objects.nonNull(serialport) &&( serialPortOpenButton.getText().equals("关闭串口")||serialPortOpenButton.getText().equals("Close Serial"))) {
+                        if (headTempAutoReadCheckBox.isSelected()) {
+                            //todo 单独读取
+                            //inverterReadConsumer.accept(5, 1);
+
                             inverterReadConsumer.accept(4, 1);
                             Thread.sleep(300);
                         }
-                        if(mosfetTempAutoReadCheckBox.isSelected()) {
+                        if (headTempAutoReadMOSCheckBox.isSelected()) {
                             inverterReadConsumer.accept(5, 1);
                             Thread.sleep(300);
                         }
-                        if(headTempAutoReadCheckBox.isSelected()) {
+                        if (headTempAutoReadheadCheckBox.isSelected()) {
                             inverterReadConsumer.accept(6, 1);
-                            Thread.sleep(300);
-                        }
-                        if(solderFinishAutoReadCheckBox.isSelected()) {
-                            inverterReadConsumer.accept(20, 1);
                             Thread.sleep(300);
                         }
                     }
                     Thread.sleep(10);
-                }catch (InterruptedException e) {
+                } catch (InterruptedException e) {
                     log.error("{}", e);
                 }
             }
@@ -820,38 +1013,61 @@ public class MainFrame extends JFrame {
             String dataString = null;
             String timestampString = null;
             switch (start) {
-                case 1: dataString = resonantFreqTextField.getText().replaceAll("(?i)khz",""); break;
-                case 2: dataString = powerConsumptionTextField.getText(); break;
-                case 3: dataString = setCurrentTextField.getText().replaceAll("(?i)ma",""); break;
-                case 4: dataString = tempFeedbackComBox.getSelectedItem().toString(); break;
-                case 5: dataString = currentFeedbackComBox.getSelectedItem().toString(); break;
-                case 19: dataString = debugTextField.getText(); break;
-                case 7: dataString = timestampTextField.getText(); break;
-                case 8: dataString = timestampTextField.getText(); break;
-                case 9: dataString = "170"; break;
-                case 17: dataString = solderTimesTextField.getText(); break;
-                case 18: dataString = solderTimesTextField.getText(); break;
-                default: break;
+                case 1:
+                    dataString = resonantFreqTextField.getText().replaceAll("(?i)khz", "");
+                    break;
+                case 2:
+                    dataString = powerConsumptionTextField.getText();
+                    break;
+                case 3:
+                    dataString = setCurrentTextField.getText().replaceAll("(?i)ma", "");
+                    break;
+                case 4:
+                    dataString = tempFeedbackComBox.getSelectedItem().toString();
+                    break;
+                case 5:
+                    dataString = currentFeedbackComBox.getSelectedItem().toString();
+                    break;
+                case 19:
+                    dataString = debugTextField.getText();
+                    break;
+                case 7:
+                    dataString = timestampTextField.getText();
+                    break;
+                case 8:
+                    dataString = timestampTextField.getText();
+                    break;
+                case 9:
+                    dataString = "170";
+                    break;
+                case 17:
+                    dataString = solderTimesTextField.getText();
+                    break;
+                case 18:
+                    dataString = solderTimesTextField.getText();
+                    break;
+                default:
+                    break;
             }
             int dataInt = 0;
             int dataH = 0;
             int dataL = 0;
-            if(StringUtils.isNotEmpty(dataString)) {
+            if (StringUtils.isNotEmpty(dataString)) {
                 dataInt = Integer.parseInt(dataString);
                 dataH = dataInt >> 8;
                 dataL = dataInt & 0xFF;
-                if(start == 7) {
+                if (start == 7) {
                     dataH = dataInt >> 24;
                     dataL = (dataInt >> 16) & 0xFF;
-                } else if(start == 8) {
+                } else if (start == 8) {
                     dataH = dataInt >> 8;
                     dataL = dataInt & 0xFF;
                 }
 
-                if(start == 17) {
+                if (start == 17) {
                     dataH = dataInt >> 24;
                     dataL = (dataInt >> 16) & 0xFF;
-                } else if(start == 18) {
+                } else if (start == 18) {
                     dataH = dataInt >> 8;
                     dataL = dataInt & 0xFF;
                 }
@@ -859,21 +1075,21 @@ public class MainFrame extends JFrame {
             command[7] = (byte) dataH;
             command[8] = (byte) dataL;
             String crcHexString = CRCTools.getModbusCRC(command, 9);
-            if(crcHexString.length() == 1) {
+            if (crcHexString.length() == 1) {
                 crcHexString = "000" + crcHexString;
             }
-            if(crcHexString.length() == 2) {
+            if (crcHexString.length() == 2) {
                 crcHexString = "00" + crcHexString;
             }
-            if(crcHexString.length() == 3) {
+            if (crcHexString.length() == 3) {
                 crcHexString = "0" + crcHexString;
             }
 
             int crcH = SerialCommTools.hexStringToInt(crcHexString.substring(0, 2));
             int crcL = SerialCommTools.hexStringToInt(crcHexString.substring(2, 4));
-            command[9] = (byte)crcH;
-            command[10] = (byte)crcL;
-            SerialCommTools.sendData(serialport, command);
+            command[9] = (byte) crcH;
+            command[10] = (byte) crcL;
+            SerialCommTools.sendData(serialport, command,serialEGCNOButton.getText());
         };
 
         writeResonantFreqButton.addActionListener(new ActionListener() {
@@ -926,7 +1142,7 @@ public class MainFrame extends JFrame {
                 inverterWriteConsumer.accept(7);
                 try {
                     Thread.sleep(100);
-                }catch (Exception e2) {
+                } catch (Exception e2) {
                     log.error("{}", e2.getLocalizedMessage());
                 }
                 inverterWriteConsumer.accept(8);
@@ -946,7 +1162,7 @@ public class MainFrame extends JFrame {
                 inverterWriteConsumer.accept(17);
                 try {
                     Thread.sleep(100);
-                }catch (Exception e2) {
+                } catch (Exception e2) {
                     log.error("{}", e2.getLocalizedMessage());
                 }
                 inverterWriteConsumer.accept(18);
@@ -956,11 +1172,17 @@ public class MainFrame extends JFrame {
 
     /**
      * 初始化可用串口号
-     * */
+     */
     private void initSerialPortList() {
-        serialPortNameList = SerialCommTools.getPortNamelist();
+        serialPortNameList = SerialCommTools.getPortNamelist(serialEGCNOButton.getText());
         if(serialPortNameList.size() < 1) {
-            ShowUtils.warningMessage("没有找到可用串口");
+
+            if (!"English".equals(serialEGCNOButton.getText())) {
+                serialPortOpenButton.setText("No available serial port was found");
+
+            }else {
+                ShowUtils.warningMessage("没有找到可用串口");
+            }
         } else {
             serialPortNameList.forEach(serialPortNameComboBox::addItem);
         }
@@ -975,7 +1197,7 @@ public class MainFrame extends JFrame {
 
     /**
      * 初始化所有控件
-     * */
+     */
     private void initAllComponents() {
         initView();
         initCommNumberDisplayArea();

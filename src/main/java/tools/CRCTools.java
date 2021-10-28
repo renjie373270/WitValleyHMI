@@ -29,7 +29,7 @@ public class CRCTools {
         return Integer.toHexString(crcReturn).toUpperCase();
     }
 
-    public static boolean checkModbusCRC(byte[] inBytes, int length) {
+    public static boolean checkModbusCRC(byte[] inBytes, int length,String code) {
         byte[] bytes = new byte[length - 2];
         int i;
         for(i = 0; i < length - 2; i++) {
@@ -41,7 +41,13 @@ public class CRCTools {
         int crcInt = (crcH << 8) | crcL;
         boolean result =  crcHexString.equalsIgnoreCase(Integer.toHexString(crcInt));
         if(!result) {
-            log.error("数据校验失败, crcReceive = {}, crcCal = {}", Integer.toHexString(crcInt).toUpperCase(), crcHexString);
+            if (!"English".equals(code)) {
+
+                log.error("Data verification failed, crcReceive = {}, crcCal = {}", Integer.toHexString(crcInt).toUpperCase(), crcHexString);
+            }else {
+                log.error("数据校验失败, crcReceive = {}, crcCal = {}", Integer.toHexString(crcInt).toUpperCase(), crcHexString);
+            }
+
         }
         return result;
     }
