@@ -34,15 +34,17 @@ public class MainFrame extends JFrame {
 
     //整体窗口
     public final int WIDTH = 1200;
-    public final int HEIGHT = 800;
+    public final int HEIGHT = 600;
     //串口设置区域
     private List<String> serialPortNameList = Lists.newArrayList();
     private SerialPort serialport;
     private JPanel serialPortBoardPanel = new JPanel();
     private JLabel serialPortNameLabel = new JLabel();
     private JLabel serialPortBaudLabel = new JLabel();
+    private JLabel temperatureLabel = new JLabel();
     private JComboBox serialPortNameComboBox = new JComboBox();
     private JComboBox serialPortBaudrateComboBox = new JComboBox();
+    private JComboBox temperatureComboBox = new JComboBox();
     //操作区域
     private JPanel inverterOperatePanel = new JPanel();
     private JTextArea mDataInput = new JTextArea();
@@ -125,6 +127,7 @@ public class MainFrame extends JFrame {
     private JCheckBox headTempAutoReadCheckBox = new JCheckBox("自动读取");
     private JCheckBox headTempAutoReadMOSCheckBox = new JCheckBox("自动读取");
     private JCheckBox headTempAutoReadheadCheckBox = new JCheckBox("自动读取");
+    private JCheckBox powerAutoReadheadCheckBox = new JCheckBox("自动读取");
     private JLabel timestampLabel = new JLabel();
     private JTextField timestampTextField = new JTextField();
     private JButton readTimestampButton = new JButton("读取");
@@ -192,6 +195,9 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(powerConsumptionTextField);
         readPowerConsumptionButton.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readPowerConsumptionButton);
+
+        powerAutoReadheadCheckBox.setBounds(310, posY, 90, 20);
+        inverterOperatePanel.add(powerAutoReadheadCheckBox);
         posY += 30;
 
         setCurrentLabel.setText("设定电流");
@@ -392,7 +398,7 @@ public class MainFrame extends JFrame {
         int index;
         //边框
         serialPortBoardPanel.setBorder(BorderFactory.createTitledBorder("串口设置"));
-        serialPortBoardPanel.setBounds(10, 10, 320, 100);
+        serialPortBoardPanel.setBounds(10, 10, 320, 130);
         serialPortBoardPanel.setLayout(null);
         add(serialPortBoardPanel);
 
@@ -426,6 +432,15 @@ public class MainFrame extends JFrame {
         serialPortBaudrateComboBox.setBounds(80, 60, 100, 20);
         serialPortBoardPanel.add(serialPortBaudrateComboBox);
 
+        temperatureLabel.setText("温度选择");
+        temperatureLabel.setForeground(Color.gray);
+        temperatureLabel.setBounds(10, 95, 120, 20);
+        serialPortBoardPanel.add(temperatureLabel);
+        temperatureComboBox.setFocusable(false);
+        temperatureComboBox.setBounds(80, 95, 100, 20);
+        serialPortBoardPanel.add(temperatureComboBox);
+
+
         initInverterOperateArea();
         initLogArea();
     }
@@ -441,6 +456,7 @@ public class MainFrame extends JFrame {
         headTempAutoReadCheckBox.setEnabled(trueFalse);
         headTempAutoReadMOSCheckBox.setEnabled(trueFalse);
         headTempAutoReadheadCheckBox.setEnabled(trueFalse);
+        powerAutoReadheadCheckBox.setEnabled(trueFalse);
 
         readPowerConsumptionButton.setEnabled(trueFalse);
         readTempFeedbackButton.setEnabled(trueFalse);
@@ -474,7 +490,7 @@ public class MainFrame extends JFrame {
 
                     if (!"English".equals(serialEGCNOButton.getText())) {
                         ShowUtils.warningMessage("No valid serial port is found！");
-                    }else {
+                    } else {
                         ShowUtils.warningMessage("没有搜索到有效串口！");
                     }
                 } else {
@@ -545,7 +561,7 @@ public class MainFrame extends JFrame {
 
                                 if (!"English".equals(serialEGCNOButton.getText())) {
                                     builder.append("null");
-                                }else {
+                                } else {
                                     errorTextArea.setText("无");
                                 }
                             } else {
@@ -553,7 +569,7 @@ public class MainFrame extends JFrame {
 
                                     if (!"English".equals(serialEGCNOButton.getText())) {
                                         builder.append("The power supply circuit");
-                                    }else {
+                                    } else {
                                         builder.append("电源短路,");
                                     }
                                 }
@@ -561,7 +577,7 @@ public class MainFrame extends JFrame {
 
                                     if (!"English".equals(serialEGCNOButton.getText())) {
                                         builder.append("Low welding current");
-                                    }else {
+                                    } else {
                                         builder.append("焊接电流低,");
                                     }
                                 }
@@ -569,7 +585,7 @@ public class MainFrame extends JFrame {
 
                                     if (!"English".equals(serialEGCNOButton.getText())) {
                                         builder.append("Abnormal mainboard temperature");
-                                    }else {
+                                    } else {
                                         builder.append("主板温度异常,");
                                     }
                                 }
@@ -577,7 +593,7 @@ public class MainFrame extends JFrame {
 
                                     if (!"English".equals(serialEGCNOButton.getText())) {
                                         builder.append("The MOS tube temperature is abnormal");
-                                    }else {
+                                    } else {
                                         builder.append("MOS管温度异常,");
                                     }
                                 }
@@ -586,7 +602,7 @@ public class MainFrame extends JFrame {
 
                                     if (!"English".equals(serialEGCNOButton.getText())) {
                                         builder.append("The welding head temperature is abnormal");
-                                    }else {
+                                    } else {
                                         builder.append("焊头温度异常");
                                     }
                                 }
@@ -655,14 +671,15 @@ public class MainFrame extends JFrame {
 
 
                     if ("English".equals(serialEGCNOButton.getText())
-                            &&"关闭串口".equals(serialPortOpenButton.getText())){
+                            && "关闭串口".equals(serialPortOpenButton.getText())) {
                         serialPortOpenButton.setText("Close Serial");
-                    }else {
-                    if (!"English".equals(serialEGCNOButton.getText())) {
-                        serialPortOpenButton.setText("打开串口");
-                    }else {
-                        serialPortOpenButton.setText("Open Serial");
-                    }}
+                    } else {
+                        if (!"English".equals(serialEGCNOButton.getText())) {
+                            serialPortOpenButton.setText("打开串口");
+                        } else {
+                            serialPortOpenButton.setText("Open Serial");
+                        }
+                    }
                     readResonantFreqButton.setText("Read");
                     readResonantFreqButton.setText("Read");
                     writeResonantFreqButton.setText("Write");
@@ -692,11 +709,13 @@ public class MainFrame extends JFrame {
                     writeTimestampButton.setText("Write");
                     setTitle("Electromagnetic welding equipment control software v1.0");
                     serialEGCNOButton.setText("简体中文");
+                    temperatureComboBox.removeAllItems();
+                    temperatureComboBox.addItem("centigrade");
+                    temperatureComboBox.addItem("Fahrenheit");
+                    temperatureComboBox.addItem("Kelvin");
 
 
-
-                }
-                else{
+                } else {
 
                     serialPortNameLabel.setText("串口号");
                     serialPortBaudLabel.setText("波特率");
@@ -723,14 +742,15 @@ public class MainFrame extends JFrame {
 
 
                     if ("简体中文".equals(serialEGCNOButton.getText())
-                            &&"Close Serial".equals(serialPortOpenButton.getText())){
+                            && "Close Serial".equals(serialPortOpenButton.getText())) {
                         serialPortOpenButton.setText("关闭串口");
-                    }else {
-                    if (!"简体中文".equals(serialEGCNOButton.getText())) {
-                        serialPortOpenButton.setText("Open Serial");
-                    }else {
-                        serialPortOpenButton.setText("打开串口");
-                    }}
+                    } else {
+                        if (!"简体中文".equals(serialEGCNOButton.getText())) {
+                            serialPortOpenButton.setText("Open Serial");
+                        } else {
+                            serialPortOpenButton.setText("打开串口");
+                        }
+                    }
 
                     readResonantFreqButton.setText("读取");
                     readResonantFreqButton.setText("读取");
@@ -761,23 +781,88 @@ public class MainFrame extends JFrame {
                     writeTimestampButton.setText("写入");
                     setTitle("电磁焊接设备控制软件 v1.0");
                     serialEGCNOButton.setText("English");
+
+                    temperatureComboBox.removeAllItems();
+                    temperatureComboBox.addItem("摄氏度");
+                    temperatureComboBox.addItem("华氏度");
+                    temperatureComboBox.addItem("开尔文");
                 }
             }
         });
+        temperatureComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String boardTemp=boardTempTextField.getText().replace("℃","")
+                        .replace("℉","").replace("K","");
+                String mosfetTemp=mosfetTempTextField.getText().replace("℃","")
+                        .replace("℉","").replace("K","");
+                String headTemp=headTempTextField.getText().replace("℃","")
+                        .replace("℉","").replace("K","");
+                if ("摄氏度".equals(temperatureComboBox.getSelectedItem()) ||
+                        "centigrade".equals(temperatureComboBox.getSelectedItem())) {
+
+                  if(boardTempTextField.getText().contains("℉")){
+
+                      boardTempTextField.setText((5/9.0)*(Double.valueOf(boardTemp)-32) + "℃");
+                      mosfetTempTextField.setText((5/9.0)*(Double.valueOf(mosfetTemp)-32) + "℃");
+                      headTempTextField.setText((5/9.0)*(Double.valueOf(headTemp)-32) + "℃");
+                    }
+                  if(boardTempTextField.getText().contains("K")){
+                      boardTempTextField.setText(Double.valueOf(boardTemp)-273 + "℃");
+                      mosfetTempTextField.setText(Double.valueOf(mosfetTemp)-273 + "℃");
+                      headTempTextField.setText(Double.valueOf(headTemp)-273 + "℃");
+                    }
+
+                }
+                if ("华氏度".equals(temperatureComboBox.getSelectedItem()) ||
+                        "Fahrenheit".equals(temperatureComboBox.getSelectedItem())) {
+
+
+                    if(boardTempTextField.getText().contains("℃")){
+                        boardTempTextField.setText((180/100.0*Double.valueOf(boardTemp))+32 + "℉");
+                        mosfetTempTextField.setText((180/100.0*Double.valueOf(mosfetTemp))+32 + "℉");
+                        headTempTextField.setText((180/100.0*Double.valueOf(headTemp))+32 + "℉");
+                    }
+                    if(boardTempTextField.getText().contains("K")){
+                        boardTempTextField.setText(1.8*(Double.valueOf(boardTemp)-273) + "℉");
+                        mosfetTempTextField.setText(1.8*(Double.valueOf(mosfetTemp)-273) + "℉");
+                        headTempTextField.setText(1.8*(Double.valueOf(headTemp)-273) + "℉");
+                    }
+
+
+                }
+                if ("开尔文".equals(temperatureComboBox.getSelectedItem()) ||
+                        "Kelvin".equals(temperatureComboBox.getSelectedItem())) {
+
+                    if(boardTempTextField.getText().contains("℃")){
+                        boardTempTextField.setText(Double.valueOf(boardTemp)+273.15 + "K");
+                        mosfetTempTextField.setText(Double.valueOf(mosfetTemp)+273.15 + "K");
+                        headTempTextField.setText( Double.valueOf(headTemp)+273.15+ "K");
+                    }
+                    if(boardTempTextField.getText().contains("℉")){
+                        boardTempTextField.setText((Double.valueOf(boardTemp)-32)/1.8000+273.15 + "K");
+                        mosfetTempTextField.setText((Double.valueOf(mosfetTemp)-32)/1.8000+273.15 + "K");
+                        headTempTextField.setText( (Double.valueOf(headTemp)-32)/1.8000+273.15+ "K");
+                    }
+
+                }
+            }
+        });
+
 
         // 打开|关闭串口
         serialPortOpenButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (("打开串口".equals(serialPortOpenButton.getText())||"Open Serial".equals(serialPortOpenButton.getText())) && Objects.nonNull(serialPortOpenButton)) {
+                if (("打开串口".equals(serialPortOpenButton.getText()) || "Open Serial".equals(serialPortOpenButton.getText())) && Objects.nonNull(serialPortOpenButton)) {
                     String serialPortName = serialPortNameComboBox.getSelectedItem().toString();
                     int serialPortBaudRate = Integer.parseInt(serialPortBaudrateComboBox.getSelectedItem().toString());
                     try {
-                        serialport = SerialCommTools.openPort(serialPortName, serialPortBaudRate,serialEGCNOButton.getText());
+                        serialport = SerialCommTools.openPort(serialPortName, serialPortBaudRate, serialEGCNOButton.getText());
                         if (!"English".equals(serialEGCNOButton.getText())) {
                             serialPortOpenButton.setText("Close Serial");
-                        }else {
+                        } else {
                             serialPortOpenButton.setText("关闭串口");
                         }
                         consumerButtonDisplay.accept(true);
@@ -788,21 +873,21 @@ public class MainFrame extends JFrame {
                                 if (Objects.isNull(serialport)) {
                                     if (!"English".equals(serialEGCNOButton.getText())) {
                                         serialPortOpenButton.setText("The serial port object is empty. Listening failed");
-                                    }else {
+                                    } else {
                                         ShowUtils.warningMessage("串口对象为空，监听失败");
                                     }
 
                                 } else {
-                                    receiveBuff = SerialCommTools.receiveData(serialport,serialEGCNOButton.getText());
+                                    receiveBuff = SerialCommTools.receiveData(serialport, serialEGCNOButton.getText());
                                     if (Objects.nonNull(receiveBuff) && receiveBuff.length > 0) {
                                         if (!"English".equals(serialEGCNOButton.getText())) {
 
                                             log.info("Receive  Data <<<<<<<<<< {}", SerialCommTools.byteArrayToStringFunction.apply(receiveBuff));
-                                        }else {
+                                        } else {
                                             log.info("收到数据 <<<<<<<<<< {}", SerialCommTools.byteArrayToStringFunction.apply(receiveBuff));
                                         }
 
-                                        if (CRCTools.checkModbusCRC(receiveBuff, receiveBuff.length,serialEGCNOButton.getText())) {
+                                        if (CRCTools.checkModbusCRC(receiveBuff, receiveBuff.length, serialEGCNOButton.getText())) {
                                             String addrString = inverterAddrTextField.getText();
                                             int addr = Integer.parseInt(addrString);
                                             if (receiveBuff[0] == addr) {
@@ -812,7 +897,7 @@ public class MainFrame extends JFrame {
                                             if (!"English".equals(serialEGCNOButton.getText())) {
 
                                                 log.error("CRC Check Failure ********************");
-                                            }else {
+                                            } else {
                                                 log.error("CRC 校验失败 ********************");
                                             }
 
@@ -820,24 +905,24 @@ public class MainFrame extends JFrame {
                                     }
                                 }
                             }
-                        },serialEGCNOButton.getText());
+                        }, serialEGCNOButton.getText());
                     } catch (PortInUseException e2) {
                         if (!"English".equals(serialEGCNOButton.getText())) {
 
                             ShowUtils.warningMessage("The serial port is occupied. Procedure");
                             log.error("Open serial{}failure，The serial port is occupied{}", serialPortName, e2.getLocalizedMessage());
-                        }else {
+                        } else {
                             ShowUtils.warningMessage("打开失败，串口被占用");
                             log.error("打开串口{}失败，串口被占用{}", serialPortName, e2.getLocalizedMessage());
                         }
 
                     }
                 } else {
-                    SerialCommTools.closePort(serialport,serialEGCNOButton.getText());
+                    SerialCommTools.closePort(serialport, serialEGCNOButton.getText());
                     if (!"English".equals(serialEGCNOButton.getText())) {
                         serialPortOpenButton.setText("Open Serial");
 
-                    }else {
+                    } else {
                         serialPortOpenButton.setText("打开串口");
                     }
 
@@ -861,7 +946,7 @@ public class MainFrame extends JFrame {
             int crcL = SerialCommTools.hexStringToInt(crcHexString.substring(2, 4));
             command[6] = (byte) crcH;
             command[7] = (byte) crcL;
-            SerialCommTools.sendData(serialport, command,serialEGCNOButton.getText());
+            SerialCommTools.sendData(serialport, command, serialEGCNOButton.getText());
             startAddress = start;
         };
 
@@ -991,7 +1076,7 @@ public class MainFrame extends JFrame {
         Runnable runnable = () -> {
             while (true) {
                 try {
-                    if (Objects.nonNull(serialport) &&( serialPortOpenButton.getText().equals("关闭串口")||serialPortOpenButton.getText().equals("Close Serial"))) {
+                    if (Objects.nonNull(serialport) && (serialPortOpenButton.getText().equals("关闭串口") || serialPortOpenButton.getText().equals("Close Serial"))) {
                         if (headTempAutoReadCheckBox.isSelected()) {
                             //todo 单独读取
                             //inverterReadConsumer.accept(5, 1);
@@ -1007,6 +1092,12 @@ public class MainFrame extends JFrame {
                             inverterReadConsumer.accept(6, 1);
                             Thread.sleep(300);
                         }
+                        if (powerAutoReadheadCheckBox.isSelected()) {
+                            inverterReadConsumer.accept(2, 1);
+                            Thread.sleep(300);
+                        }
+
+
                     }
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -1107,7 +1198,7 @@ public class MainFrame extends JFrame {
             int crcL = SerialCommTools.hexStringToInt(crcHexString.substring(2, 4));
             command[9] = (byte) crcH;
             command[10] = (byte) crcL;
-            SerialCommTools.sendData(serialport, command,serialEGCNOButton.getText());
+            SerialCommTools.sendData(serialport, command, serialEGCNOButton.getText());
         };
 
         writeResonantFreqButton.addActionListener(new ActionListener() {
@@ -1193,12 +1284,12 @@ public class MainFrame extends JFrame {
      */
     private void initSerialPortList() {
         serialPortNameList = SerialCommTools.getPortNamelist(serialEGCNOButton.getText());
-        if(serialPortNameList.size() < 1) {
+        if (serialPortNameList.size() < 1) {
 
             if (!"English".equals(serialEGCNOButton.getText())) {
                 serialPortOpenButton.setText("No available serial port was found");
 
-            }else {
+            } else {
                 ShowUtils.warningMessage("没有找到可用串口");
             }
         } else {
@@ -1209,6 +1300,11 @@ public class MainFrame extends JFrame {
         serialPortBaudrateComboBox.addItem("38400");
         serialPortBaudrateComboBox.addItem("57600");
         serialPortBaudrateComboBox.addItem("115200");
+
+
+        temperatureComboBox.addItem("摄氏度");
+        temperatureComboBox.addItem("华氏度");
+        temperatureComboBox.addItem("开尔文");
 
         consumerButtonDisplay.accept(false);
     }
