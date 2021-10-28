@@ -34,7 +34,7 @@ public class MainFrame extends JFrame {
 
     //整体窗口
     public final int WIDTH = 1200;
-    public final int HEIGHT = 650;
+    public final int HEIGHT = 656;
     //串口设置区域
     private List<String> serialPortNameList = Lists.newArrayList();
     private SerialPort serialport;
@@ -142,6 +142,9 @@ public class MainFrame extends JFrame {
     private JPanel logPanel = new JPanel();
     private JTextArea logTextArea = new JTextArea();
     JScrollPane logScrollPane = new JScrollPane(logTextArea);
+
+    private JPanel companyPanel = new JPanel();
+    private JLabel companyTextField = new JLabel();
 
     /**
      * 整体窗口
@@ -411,6 +414,16 @@ public class MainFrame extends JFrame {
         temperatureComboBox.setFocusable(false);
         temperatureComboBox.setBounds(80, 95, 100, 20);
         serialPortBoardPanel.add(temperatureComboBox);
+
+
+
+        companyPanel.setBounds(450, 590, 420, 130);
+        companyPanel.setLayout(null);
+        add(companyPanel);
+        companyTextField.setText("@2021 昆山多拿电子科技有限公司");
+        companyTextField.setFocusable(false);
+        companyTextField.setBounds(10, 0, 400, 20);
+        companyPanel.add(companyTextField);
 
 
         initInverterOperateArea();
@@ -687,7 +700,7 @@ public class MainFrame extends JFrame {
                     temperatureComboBox.addItem("centigrade");
                     temperatureComboBox.addItem("Fahrenheit");
                     temperatureComboBox.addItem("Kelvin");
-
+                    companyTextField.setText("@2021 Kunshan duona Electronic Technology Co., Ltd");
 
                 } else {
 
@@ -760,6 +773,8 @@ public class MainFrame extends JFrame {
                     temperatureComboBox.addItem("摄氏度");
                     temperatureComboBox.addItem("华氏度");
                     temperatureComboBox.addItem("开尔文");
+
+                    companyTextField.setText("@2021 昆山多拿电子科技有限公司");
                 }
             }
         });
