@@ -335,7 +335,7 @@ public class MainFrame extends JFrame {
         errorTextArea.setLineWrap(true);
         errorTextArea.setWrapStyleWord(true);
         inverterOperatePanel.add(errorTextArea);
-        readErrorButton.setBounds(250, posY, 60, 20);
+        readErrorButton.setBounds(320, posY, 60, 20);
         inverterOperatePanel.add(readErrorButton);
         posY += 60;
 
