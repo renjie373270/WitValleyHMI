@@ -335,7 +335,7 @@ public class MainFrame extends JFrame {
         errorTextArea.setLineWrap(true);
         errorTextArea.setWrapStyleWord(true);
         inverterOperatePanel.add(errorTextArea);
-        readErrorButton.setBounds(320, posY, 60, 20);
+        readErrorButton.setBounds(320, posY, 80, 20);
         inverterOperatePanel.add(readErrorButton);
         posY += 60;
 
@@ -629,7 +629,7 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if ("English".equals(serialEGCNOButton.getText())) {
-                    serialEGCNOButton.setText("简体中文");
+
                     serialPortNameLabel.setText("Serial No");
                     serialPortBaudLabel.setText("Baud Rate");
                     inverterAddrLabel.setText("station No");
@@ -654,7 +654,15 @@ public class MainFrame extends JFrame {
                     serialPortBoardPanel.setBorder(BorderFactory.createTitledBorder("SerialPort Settings"));
 
 
-                    serialPortOpenButton.setText("Open Serial");
+                    if ("English".equals(serialEGCNOButton.getText())
+                            &&"关闭串口".equals(serialPortOpenButton.getText())){
+                        serialPortOpenButton.setText("Close Serial");
+                    }else {
+                    if (!"English".equals(serialEGCNOButton.getText())) {
+                        serialPortOpenButton.setText("打开串口");
+                    }else {
+                        serialPortOpenButton.setText("Open Serial");
+                    }}
                     readResonantFreqButton.setText("Read");
                     readResonantFreqButton.setText("Read");
                     writeResonantFreqButton.setText("Write");
@@ -683,13 +691,13 @@ public class MainFrame extends JFrame {
                     readTimestampButton.setText("Read");
                     writeTimestampButton.setText("Write");
                     setTitle("Electromagnetic welding equipment control software v1.0");
-
+                    serialEGCNOButton.setText("简体中文");
 
 
 
                 }
                 else{
-                    serialEGCNOButton.setText("English");
+
                     serialPortNameLabel.setText("串口号");
                     serialPortBaudLabel.setText("波特率");
                     inverterAddrLabel.setText("地址");
@@ -714,7 +722,16 @@ public class MainFrame extends JFrame {
                     serialPortBoardPanel.setBorder(BorderFactory.createTitledBorder("串口设置"));
 
 
-                    serialPortOpenButton.setText("打开串口");
+                    if ("简体中文".equals(serialEGCNOButton.getText())
+                            &&"Close Serial".equals(serialPortOpenButton.getText())){
+                        serialPortOpenButton.setText("关闭串口");
+                    }else {
+                    if (!"简体中文".equals(serialEGCNOButton.getText())) {
+                        serialPortOpenButton.setText("Open Serial");
+                    }else {
+                        serialPortOpenButton.setText("打开串口");
+                    }}
+
                     readResonantFreqButton.setText("读取");
                     readResonantFreqButton.setText("读取");
                     writeResonantFreqButton.setText("写入");
@@ -743,6 +760,7 @@ public class MainFrame extends JFrame {
                     readTimestampButton.setText("读取");
                     writeTimestampButton.setText("写入");
                     setTitle("电磁焊接设备控制软件 v1.0");
+                    serialEGCNOButton.setText("English");
                 }
             }
         });
