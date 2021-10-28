@@ -34,11 +34,13 @@ public class MainFrame extends JFrame {
 
     //整体窗口
     public final int WIDTH = 1200;
-    public final int HEIGHT = 600;
+    public final int HEIGHT = 650;
     //串口设置区域
     private List<String> serialPortNameList = Lists.newArrayList();
     private SerialPort serialport;
     private JPanel serialPortBoardPanel = new JPanel();
+    private JScrollPane jscrollPane = new JScrollPane();
+
     private JLabel serialPortNameLabel = new JLabel();
     private JLabel serialPortBaudLabel = new JLabel();
     private JLabel temperatureLabel = new JLabel();
@@ -148,12 +150,13 @@ public class MainFrame extends JFrame {
         // 关闭程序
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         // 禁止窗口最大化
-        setResizable(false);
+        setResizable(true);
 
         // 设置程序窗口居中显示
         Point p = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
         setBounds(p.x - WIDTH / 2, p.y - HEIGHT / 2, WIDTH, HEIGHT);
         this.setLayout(null);
+
 
         setTitle("电磁焊接设备控制软件 v0.0");
     }
@@ -162,7 +165,7 @@ public class MainFrame extends JFrame {
         int posY = 20;
         // 操作
         inverterOperatePanel.setBorder(BorderFactory.createTitledBorder("逆变器参数"));
-        inverterOperatePanel.setBounds(10, 150, 410, 590);
+        inverterOperatePanel.setBounds(10, 150, 410, 440);
         inverterOperatePanel.setLayout(null);
         add(inverterOperatePanel);
 
@@ -173,7 +176,7 @@ public class MainFrame extends JFrame {
         inverterAddrTextField.setText("1");
         inverterAddrTextField.setBounds(150, posY, 40, 20);
         inverterOperatePanel.add(inverterAddrTextField);
-        posY += 30;
+        posY += 25;
 
         setResenantFreqLabel.setText("谐振频率");
         setResenantFreqLabel.setForeground(Color.gray);
@@ -185,7 +188,7 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(readResonantFreqButton);
         writeResonantFreqButton.setBounds(310, posY, 80, 20);
         inverterOperatePanel.add(writeResonantFreqButton);
-        posY += 30;
+        posY += 25;
 
         powerConsumptionLabel.setText("用电量");
         powerConsumptionLabel.setForeground(Color.gray);
@@ -198,7 +201,7 @@ public class MainFrame extends JFrame {
 
         powerAutoReadheadCheckBox.setBounds(310, posY, 90, 20);
         inverterOperatePanel.add(powerAutoReadheadCheckBox);
-        posY += 30;
+        posY += 25;
 
         setCurrentLabel.setText("设定电流");
         setCurrentLabel.setForeground(Color.gray);
@@ -210,35 +213,7 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(readSetCurrentButton);
         writeSetCurrentButton.setBounds(310, posY, 80, 20);
         inverterOperatePanel.add(writeSetCurrentButton);
-        posY += 30;
-
-        tempFeedbackLabel.setText("温度反馈");
-        tempFeedbackLabel.setForeground(Color.gray);
-        tempFeedbackLabel.setBounds(10, posY, 150, 20);
-        inverterOperatePanel.add(tempFeedbackLabel);
-        tempFeedbackComBox.setFocusable(false);
-        tempFeedbackComBox.setBounds(150, posY, 60, 20);
-        tempFeedbackComBox.addItem("NONE");
-        inverterOperatePanel.add(tempFeedbackComBox);
-        readTempFeedbackButton.setBounds(220, posY, 80, 20);
-        inverterOperatePanel.add(readTempFeedbackButton);
-        writeTempFeedbackButton.setBounds(310, posY, 80, 20);
-        inverterOperatePanel.add(writeTempFeedbackButton);
-        posY += 30;
-
-        currentFeedbackLabel.setText("电流控制");
-        currentFeedbackLabel.setForeground(Color.gray);
-        currentFeedbackLabel.setBounds(10, posY, 150, 20);
-        inverterOperatePanel.add(currentFeedbackLabel);
-        currentFeedbackComBox.setFocusable(false);
-        currentFeedbackComBox.setBounds(150, posY, 60, 20);
-        currentFeedbackComBox.addItem("NONE");
-        inverterOperatePanel.add(currentFeedbackComBox);
-        readCurrentFeedbackButton.setBounds(220, posY, 80, 20);
-        inverterOperatePanel.add(readCurrentFeedbackButton);
-        writeCurrentFeedbackButton.setBounds(310, posY, 80, 20);
-        inverterOperatePanel.add(writeCurrentFeedbackButton);
-        posY += 30;
+        posY += 25;
 
         timestampLabel.setText("出厂时间");
         timestampLabel.setForeground(Color.gray);
@@ -250,7 +225,7 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(readTimestampButton);
         writeTimestampButton.setBounds(310, posY, 80, 20);
         inverterOperatePanel.add(writeTimestampButton);
-        posY += 30;
+        posY += 25;
 
         stopLabel.setText("停用模式");
         stopLabel.setForeground(Color.gray);
@@ -260,7 +235,7 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(stopTextField);
         writeStopButton.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(writeStopButton);
-        posY += 30;
+        posY += 25;
 
         boardTempLabel.setText("主板温度");
         boardTempLabel.setForeground(Color.gray);
@@ -274,7 +249,7 @@ public class MainFrame extends JFrame {
         headTempAutoReadCheckBox.setBounds(310, posY, 90, 20);
         inverterOperatePanel.add(headTempAutoReadCheckBox);
 
-        posY += 30;
+        posY += 25;
 
         mosfetTempLabel.setText("MOS温度");
         mosfetTempLabel.setForeground(Color.gray);
@@ -288,7 +263,7 @@ public class MainFrame extends JFrame {
         headTempAutoReadMOSCheckBox.setBounds(310, posY, 90, 20);
         inverterOperatePanel.add(headTempAutoReadMOSCheckBox);
 
-        posY += 30;
+        posY += 25;
 
         headTempLabel.setText("焊头温度");
         headTempLabel.setForeground(Color.gray);
@@ -301,7 +276,7 @@ public class MainFrame extends JFrame {
 
         headTempAutoReadheadCheckBox.setBounds(310, posY, 90, 20);
         inverterOperatePanel.add(headTempAutoReadheadCheckBox);
-        posY += 30;
+        posY += 25;
 
         voltage1Label.setText("电压1");
         voltage1Label.setForeground(Color.gray);
@@ -311,7 +286,7 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(voltage1TextField);
         readVoltage1Button.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readVoltage1Button);
-        posY += 30;
+        posY += 25;
 
         voltage2Label.setText("电压2");
         voltage2Label.setForeground(Color.gray);
@@ -321,7 +296,7 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(voltage2TextField);
         readVoltage2Button.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readVoltage2Button);
-        posY += 30;
+        posY += 25;
 
         current1Label.setText("电流接口");
         current1Label.setForeground(Color.gray);
@@ -331,7 +306,7 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(current1TextField);
         readCurrent1Button.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readCurrent1Button);
-        posY += 30;
+        posY += 25;
 
         errorLabel.setText("错误信息");
         errorLabel.setForeground(Color.gray);
@@ -355,7 +330,7 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(readSolderTimesButton);
         writeSolderTimesButton.setBounds(310, posY, 80, 20);
         inverterOperatePanel.add(writeSolderTimesButton);
-        posY += 30;
+        posY += 25;
 
         debugLabel.setText("调试开关");
         debugLabel.setForeground(Color.gray);
@@ -367,28 +342,23 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(readDebugButton);
         writeDebugButton.setBounds(310, posY, 80, 20);
         inverterOperatePanel.add(writeDebugButton);
-        posY += 30;
+        posY += 25;
 
-//        solderLogLabel.setText("焊接日志");
-//        solderLogLabel.setForeground(Color.gray);
-//        solderLogLabel.setBounds(10, posY, 60, 20);
-//        inverterOperatePanel.add(solderLogLabel);
-//        readSolderLogButton.setBounds(80, posY, 60, 20);
-//        inverterOperatePanel.add(readSolderLogButton);
+
     }
 
     private void initLogArea() {
         logPanel.setBorder(BorderFactory.createTitledBorder("日志"));
-        logPanel.setBounds(420, 10, 770, 750);
+        logPanel.setBounds(420, 10, 770, 580);
         logPanel.setLayout(null);
         add(logPanel);
 
-        logScrollPane.setBounds(10, 20, 750, 720);
+        logScrollPane.setBounds(10, 20, 750, 540);
         logScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         logPanel.add(logScrollPane);
 
         logTextArea.setLineWrap(true);
-        logTextArea.setBounds(10, 20, 750, 720);
+        logTextArea.setBounds(10, 20, 750, 540);
     }
 
     /**
@@ -396,7 +366,9 @@ public class MainFrame extends JFrame {
      */
     private void initCommNumberDisplayArea() {
         int index;
-        //边框
+
+
+       //边框
         serialPortBoardPanel.setBorder(BorderFactory.createTitledBorder("串口设置"));
         serialPortBoardPanel.setBounds(10, 10, 320, 130);
         serialPortBoardPanel.setLayout(null);
@@ -443,6 +415,8 @@ public class MainFrame extends JFrame {
 
         initInverterOperateArea();
         initLogArea();
+
+
     }
 
     Consumer<Boolean> consumerButtonDisplay = trueFalse -> {
