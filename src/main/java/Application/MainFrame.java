@@ -384,16 +384,16 @@ public class MainFrame extends JFrame {
         serialPortBoardPanel.add(serialPortNameLabel);
 
         serialPortNameComboBox.setFocusable(false);
-        serialPortNameComboBox.setBounds(80, 25, 100, 20);
+        serialPortNameComboBox.setBounds(90, 25, 100, 20);
         serialPortBoardPanel.add(serialPortNameComboBox);
 
         //打开串口
         serialPortOpenButton.setFocusable(false);
-        serialPortOpenButton.setBounds(190, 25, 110, 20);
+        serialPortOpenButton.setBounds(200, 25, 110, 20);
         serialPortBoardPanel.add(serialPortOpenButton);
 
         serialEGCNOButton.setFocusable(false);
-        serialEGCNOButton.setBounds(190, 60, 110, 20);
+        serialEGCNOButton.setBounds(200, 60, 110, 20);
         serialPortBoardPanel.add(serialEGCNOButton);
 
 
@@ -404,7 +404,7 @@ public class MainFrame extends JFrame {
         serialPortBoardPanel.add(serialPortBaudLabel);
 
         serialPortBaudrateComboBox.setFocusable(false);
-        serialPortBaudrateComboBox.setBounds(80, 60, 100, 20);
+        serialPortBaudrateComboBox.setBounds(90, 60, 100, 20);
         serialPortBoardPanel.add(serialPortBaudrateComboBox);
 
         temperatureLabel.setText("温度选择");
@@ -412,7 +412,7 @@ public class MainFrame extends JFrame {
         temperatureLabel.setBounds(10, 95, 120, 20);
         serialPortBoardPanel.add(temperatureLabel);
         temperatureComboBox.setFocusable(false);
-        temperatureComboBox.setBounds(80, 95, 100, 20);
+        temperatureComboBox.setBounds(90, 95, 100, 20);
         serialPortBoardPanel.add(temperatureComboBox);
 
 
@@ -692,6 +692,7 @@ public class MainFrame extends JFrame {
                     headTempAutoReadCheckBox.setText("Auto Read");
                     headTempAutoReadMOSCheckBox.setText("Auto Read");
                     headTempAutoReadheadCheckBox.setText("Auto Read");
+                    powerAutoReadheadCheckBox.setText("Auto Read");
                     readTimestampButton.setText("Read");
                     writeTimestampButton.setText("Write");
                     setTitle("Electromagnetic welding equipment control software v1.0");
@@ -701,6 +702,7 @@ public class MainFrame extends JFrame {
                     temperatureComboBox.addItem("Fahrenheit");
                     temperatureComboBox.addItem("Kelvin");
                     companyTextField.setText("@2021 Kunshan duona Electronic Technology Co., Ltd");
+                    temperatureLabel.setText("Temperature");
 
                 } else {
 
@@ -764,6 +766,7 @@ public class MainFrame extends JFrame {
                     headTempAutoReadCheckBox.setText("自动读取");
                     headTempAutoReadMOSCheckBox.setText("自动读取");
                     headTempAutoReadheadCheckBox.setText("自动读取");
+                    powerAutoReadheadCheckBox.setText("自动读取");
                     readTimestampButton.setText("读取");
                     writeTimestampButton.setText("写入");
                     setTitle("电磁焊接设备控制软件 v1.0");
@@ -775,6 +778,7 @@ public class MainFrame extends JFrame {
                     temperatureComboBox.addItem("开尔文");
 
                     companyTextField.setText("@2021 昆山多拿电子科技有限公司");
+                    temperatureLabel.setText("温度选择");
                 }
             }
         });
