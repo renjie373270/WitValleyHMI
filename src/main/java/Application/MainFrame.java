@@ -1023,19 +1023,19 @@ public class MainFrame extends JFrame {
                     if (Objects.nonNull(serialport) && (serialPortOpenButton.getText().equals("关闭串口") || serialPortOpenButton.getText().equals("Close Serial"))) {
                         if (headTempAutoReadCheckBox.isSelected()) {
                             inverterReadConsumer.accept(4, 1);
-                            Thread.sleep(300);
+                            Thread.sleep(1000);
                         }
                         if (headTempAutoReadMOSCheckBox.isSelected()) {
                             inverterReadConsumer.accept(5, 1);
-                            Thread.sleep(300);
+                            Thread.sleep(1000);
                         }
                         if (headTempAutoReadheadCheckBox.isSelected()) {
                             inverterReadConsumer.accept(6, 1);
-                            Thread.sleep(300);
+                            Thread.sleep(1000);
                         }
                         if (powerAutoReadheadCheckBox.isSelected()) {
                             inverterReadConsumer.accept(2, 1);
-                            Thread.sleep(300);
+                            Thread.sleep(1000);
                         }
 
 
