@@ -196,7 +196,7 @@ public class MainFrame extends JFrame {
 
         inverterAddrLabel.setText("地址");
         inverterAddrLabel.setForeground(Color.gray);
-        inverterAddrLabel.setBounds(10, posY, 60, 20);
+        inverterAddrLabel.setBounds(10, posY, 70, 20);
         inverterOperatePanel.add(inverterAddrLabel);
         inverterAddrTextField.setText("1");
         inverterAddrTextField.setBounds(150, posY, 40, 20);
@@ -648,9 +648,9 @@ public class MainFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if ("English".equals(languageSelectButton.getText())) {
                     temperatureLabel.setText("TEMP. Unit");
-                    serialPortNameLabel.setText("Serial No");
+                    serialPortNameLabel.setText("Serial No.");
                     serialPortBaudLabel.setText("Baud Rate");
-                    inverterAddrLabel.setText("Station No");
+                    inverterAddrLabel.setText("Station No.");
                     inverterOperatePanel.setBorder(BorderFactory.createTitledBorder("Inverter Parameters"));
                     setResenantFreqLabel.setText("Resonant Frequency");
                     powerConsumptionLabel.setText("Power Consumption");
@@ -664,7 +664,7 @@ public class MainFrame extends JFrame {
                     headTempLabel.setText("Head Temperature");
                     voltage1Label.setText("0 t0 5V Interface");
                     voltage2Label.setText("0 t0 10V Interface");
-                    current1Label.setText("4 to 20mA Interface");
+                    current1Label.setText("4 t0 20mA Interface");
                     errorLabel.setText("Error Message");
                     solderTimesLabel.setText("Welding Times");
                     debugLabel.setText("Debug Switch");
