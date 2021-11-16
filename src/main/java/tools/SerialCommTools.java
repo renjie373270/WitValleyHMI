@@ -61,7 +61,7 @@ public class SerialCommTools {
                     serialPort.setSerialPortParams(baudrate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1,
                             SerialPort.PARITY_NONE);
                     if (!"English".equals(code)) {
-                        log.info("Open serial port successfully，Serial  number {} Baud rate {} Data bit {} Stop bit {} Check bit {}", portName, baudrate, 88, 1, "null");
+                        log.info("Open serial port successfully，Serial  number {} Baud rate {} Data bit {} Stop bit {} Parity Check {}", portName, baudrate, 88, 1, "null");
 
                     } else {
                         log.info("打开串口成功，串口号 {} 波特率 {} 数据位 {} 停止位 {} 校验位 {}", portName, baudrate, 88, 1, "无");

@@ -7,17 +7,13 @@ import gnu.io.SerialPort;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tools.CRCTools;
-import tools.SerialCommTools;
-import tools.ShowUtils;
-import tools.SleepUtils;
+import tools.*;
 
 import javax.swing.*;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -32,6 +28,8 @@ import java.util.function.Function;
 public class MainFrame extends JFrame {
 
     private static final Logger log = LoggerFactory.getLogger(MainFrame.class);
+    private static MainFrame frame;
+    private static int code = 1;
 
     //整体窗口
     public final int WIDTH = 1200;
@@ -175,14 +173,12 @@ public class MainFrame extends JFrame {
         // 关闭程序
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         // 禁止窗口最大化
-        setResizable(true);
+        setResizable(false);
 
         // 设置程序窗口居中显示
         Point p = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
         setBounds(p.x - WIDTH / 2, p.y - HEIGHT / 2, WIDTH, HEIGHT);
         this.setLayout(null);
-
-
         setTitle("电磁焊接设备控制软件 v0.0");
     }
 
@@ -392,7 +388,6 @@ public class MainFrame extends JFrame {
     private void initCommNumberDisplayArea() {
         int index;
 
-
         //边框
         serialPortBoardPanel.setBorder(BorderFactory.createTitledBorder("串口设置"));
         serialPortBoardPanel.setBounds(10, 10, 320, 130);
@@ -418,7 +413,6 @@ public class MainFrame extends JFrame {
         languageSelectButton.setBounds(190, 60, 110, 20);
         serialPortBoardPanel.add(languageSelectButton);
 
-
         //波特率标签
         serialPortBaudLabel.setText("波特率");
         serialPortBaudLabel.setForeground(Color.gray);
@@ -437,8 +431,6 @@ public class MainFrame extends JFrame {
         temperatureUnitComboBox.setBounds(80, 95, 100, 20);
         serialPortBoardPanel.add(temperatureUnitComboBox);
 
-
-
         companyPanel.setBounds(450, 590, 420, 130);
         companyPanel.setLayout(null);
         add(companyPanel);
@@ -447,11 +439,8 @@ public class MainFrame extends JFrame {
         companyTextField.setBounds(10, 0, 400, 20);
         companyPanel.add(companyTextField);
 
-
         initInverterOperateArea();
         initLogArea();
-
-
     }
 
     Consumer<Boolean> consumerButtonDisplay = trueFalse -> {
@@ -784,7 +773,7 @@ public class MainFrame extends JFrame {
                     powerAutoReadheadCheckBox.setText("自动读取");
                     readTimestampButton.setText("读取");
                     writeTimestampButton.setText("写入");
-                    setTitle("电磁焊接设备控制软件 v1.0");
+                    setTitle("电磁焊接设备控制软件 v1.1");
                     languageSelectButton.setText("English");
                     int index = temperatureUnitComboBox.getSelectedIndex();
                     temperatureUnitComboBox.removeAllItems();
@@ -797,25 +786,87 @@ public class MainFrame extends JFrame {
                 }
             }
         });
-//        temperatureComboBox.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                Runnable runnable = () -> {
-//                    readBoardTempButton.doClick();
-//                    SleepUtils.sleep(100);
-//                    readMosfetTempButton.doClick();
-//                    SleepUtils.sleep(100);
-//                    readHeadTempButton.doClick();
-//                    SleepUtils.sleep(100);
-//                };
-//                new Thread(runnable).start();
-//            }
-//        });
+
+        inverterAddrTextField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String addrString = inverterAddrTextField.getText();
+                if(StringUtils.isEmpty(addrString)) {
+                    return;
+                }
+                int tempStationNo = Integer.parseInt(addrString);
+                code &= 0xC0;
+                code |= tempStationNo;
+                CodeSwitchUtils.updateSwitch(frame, code);
+            }
+        });
+
+        serialPortBaudrateComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                code &= 0x3F;
+                int index = serialPortBaudrateComboBox.getSelectedIndex();
+                code |= (index << 6);
+                CodeSwitchUtils.updateSwitch(frame, code);
+            }
+        });
+
+        serialPortNameComboBox.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                CodeSwitchUtils.updateSwitch(frame, code);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                CodeSwitchUtils.updateSwitch(frame, code);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        frame.addWindowFocusListener(new WindowFocusListener() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                Runnable runnable = () -> {
+                    SleepUtils.sleep(500);
+                    CodeSwitchUtils.updateSwitch(frame, code);
+                };
+                new Thread(runnable).start();
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+
+            }
+        });
 
 
         // 打开|关闭串口
         serialPortOpenButton.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (("打开串口".equals(serialPortOpenButton.getText()) || "Open Serial".equals(serialPortOpenButton.getText())) && Objects.nonNull(serialPortOpenButton)) {
@@ -1018,29 +1069,37 @@ public class MainFrame extends JFrame {
         });
 
         Runnable runnable = () -> {
+            int x = 0;
             while (true) {
                 try {
                     if (Objects.nonNull(serialport) && (serialPortOpenButton.getText().equals("关闭串口") || serialPortOpenButton.getText().equals("Close Serial"))) {
                         if (headTempAutoReadCheckBox.isSelected()) {
                             inverterReadConsumer.accept(4, 1);
                             Thread.sleep(1000);
+                            x += 1000;
                         }
                         if (headTempAutoReadMOSCheckBox.isSelected()) {
                             inverterReadConsumer.accept(5, 1);
                             Thread.sleep(1000);
+                            x += 1000;
                         }
                         if (headTempAutoReadheadCheckBox.isSelected()) {
                             inverterReadConsumer.accept(6, 1);
                             Thread.sleep(1000);
+                            x += 1000;
                         }
                         if (powerAutoReadheadCheckBox.isSelected()) {
                             inverterReadConsumer.accept(2, 1);
                             Thread.sleep(1000);
+                            x += 1000;
                         }
-
-
                     }
                     Thread.sleep(10);
+                    x += 10;
+                    if(x >= 5000) {
+                        x = 0;
+                        CodeSwitchUtils.updateSwitch(frame, code);
+                    }
                 } catch (InterruptedException e) {
                     log.error("{}", e);
                 }
@@ -1240,7 +1299,6 @@ public class MainFrame extends JFrame {
         serialPortBaudrateComboBox.addItem("19200");
         serialPortBaudrateComboBox.addItem("38400");
         serialPortBaudrateComboBox.addItem("57600");
-        serialPortBaudrateComboBox.addItem("115200");
 
 
         temperatureUnitComboBox.addItem("摄氏度");
@@ -1261,13 +1319,14 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        MainFrame frame = new MainFrame();
+        frame = new MainFrame();
         frame.initAllComponents();
 
         ConsoleStream consoleStream = new ConsoleStream(frame.logTextArea);
         PrintStream printStream = new PrintStream(consoleStream);
         System.setOut(printStream);
-
         frame.setVisible(true);
+        SleepUtils.sleep(1000);
+        CodeSwitchUtils.updateSwitch(frame, code);
     }
 }
