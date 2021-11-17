@@ -179,7 +179,7 @@ public class MainFrame extends JFrame {
         Point p = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
         setBounds(p.x - WIDTH / 2, p.y - HEIGHT / 2, WIDTH, HEIGHT);
         this.setLayout(null);
-        setTitle("电磁焊接设备控制软件 v0.0");
+        setTitle("电磁焊接设备控制软件 v1.2");
     }
 
     private void initInverterOperateArea() {
@@ -699,7 +699,7 @@ public class MainFrame extends JFrame {
                     powerAutoReadheadCheckBox.setText("Auto Read");
                     readTimestampButton.setText("Read");
                     writeTimestampButton.setText("Write");
-                    setTitle("Electromagnetic Welding Facility Control V1.1");
+                    setTitle("Electromagnetic Welding Facility Control V1.2");
                     languageSelectButton.setText("简体中文");
                     int index = temperatureUnitComboBox.getSelectedIndex();
                     temperatureUnitComboBox.removeAllItems();
@@ -773,7 +773,7 @@ public class MainFrame extends JFrame {
                     powerAutoReadheadCheckBox.setText("自动读取");
                     readTimestampButton.setText("读取");
                     writeTimestampButton.setText("写入");
-                    setTitle("电磁焊接设备控制软件 v1.1");
+                    setTitle("电磁焊接设备控制软件 v1.2");
                     languageSelectButton.setText("English");
                     int index = temperatureUnitComboBox.getSelectedIndex();
                     temperatureUnitComboBox.removeAllItems();

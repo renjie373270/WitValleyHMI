@@ -11,6 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="tool" target="1.8" />
       <module name="WitValleyRU" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -18,6 +19,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="WitValleyHMI" options="-parameters" />
       <module name="WitValleyRU" options="-parameters" />
+      <module name="tool" options="-parameters" />
     </option>
   </component>
 </project>
