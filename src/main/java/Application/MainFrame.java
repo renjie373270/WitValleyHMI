@@ -79,10 +79,11 @@ public class MainFrame extends JFrame {
     private JComboBox currentFeedbackComBox = new JComboBox();
     private JButton readCurrentFeedbackButton = new JButton("读取");
     private JButton writeCurrentFeedbackButton = new JButton("写入");
-    //停用模式
-    private JLabel stopLabel = new JLabel();
-    private JTextField stopTextField = new JTextField();
-    private JButton writeStopButton = new JButton("设置");
+    //滤波系数
+    private JLabel filterCoefficientLabel = new JLabel();
+    private JTextField filterCoefficientTextField = new JTextField();
+    private JButton writeFilterCoefficientButton = new JButton("写入");
+    private JButton readFilterCoefficientButton = new JButton("读取");
     //主板温度
     private JLabel boardTempLabel = new JLabel();
     private JTextField boardTempTextField = new JTextField();
@@ -179,7 +180,7 @@ public class MainFrame extends JFrame {
         Point p = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
         setBounds(p.x - WIDTH / 2, p.y - HEIGHT / 2, WIDTH, HEIGHT);
         this.setLayout(null);
-        setTitle("电磁焊接设备控制软件 v1.2");
+        setTitle("电磁焊接设备控制软件 V1.3");
     }
 
     private void initInverterOperateArea() {
@@ -248,14 +249,16 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(writeTimestampButton);
         posY += 25;
 
-        stopLabel.setText("停用模式");
-        stopLabel.setForeground(Color.gray);
-        stopLabel.setBounds(10, posY, 150, 20);
-        inverterOperatePanel.add(stopLabel);
-        stopTextField.setBounds(150, posY, 60, 20);
-        inverterOperatePanel.add(stopTextField);
-        writeStopButton.setBounds(220, posY, 80, 20);
-        inverterOperatePanel.add(writeStopButton);
+        filterCoefficientLabel.setText("滤波系数");
+        filterCoefficientLabel.setForeground(Color.gray);
+        filterCoefficientLabel.setBounds(10, posY, 150, 20);
+        inverterOperatePanel.add(filterCoefficientLabel);
+        filterCoefficientTextField.setBounds(150, posY, 60, 20);
+        inverterOperatePanel.add(filterCoefficientTextField);
+        readFilterCoefficientButton.setBounds(220, posY, 80, 20);
+        inverterOperatePanel.add(readFilterCoefficientButton);
+        writeFilterCoefficientButton.setBounds(310, posY, 80, 20);
+        inverterOperatePanel.add(writeFilterCoefficientButton);
         posY += 25;
 
         boardTempLabel.setText("主板温度");
@@ -266,10 +269,8 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(boardTempTextField);
         readBoardTempButton.setBounds(220, posY, 80, 20);
         inverterOperatePanel.add(readBoardTempButton);
-
         headTempAutoReadCheckBox.setBounds(310, posY, 90, 20);
         inverterOperatePanel.add(headTempAutoReadCheckBox);
-
         posY += 25;
 
         mosfetTempLabel.setText("MOS温度");
@@ -463,7 +464,8 @@ public class MainFrame extends JFrame {
         writeCurrentFeedbackButton.setEnabled(trueFalse);
         readDebugButton.setEnabled(trueFalse);
         writeDebugButton.setEnabled(trueFalse);
-        writeStopButton.setEnabled(trueFalse);
+        writeFilterCoefficientButton.setEnabled(trueFalse);
+        readFilterCoefficientButton.setEnabled(trueFalse);
         readBoardTempButton.setEnabled(trueFalse);
         readVoltage1Button.setEnabled(trueFalse);
         readVoltage2Button.setEnabled(trueFalse);
@@ -540,6 +542,9 @@ public class MainFrame extends JFrame {
                             break;
                         case 6:
                             headTempTextField.setText(getTemp(data));
+                            break;
+                        case 10:
+                            filterCoefficientTextField.setText(Integer.toString(data));
                             break;
                         case 14:
                             voltage1TextField.setText(Integer.toString(data) + "mV");
@@ -647,7 +652,7 @@ public class MainFrame extends JFrame {
                     tempFeedbackLabel.setText("Temperature Feedback");
                     currentFeedbackLabel.setText("Current Control");
                     timestampLabel.setText("Manufacturing Date");
-                    stopLabel.setText("Disable Mode");
+                    filterCoefficientLabel.setText("Filter Coefficient");
                     boardTempLabel.setText("CPU Temperature");
                     mosfetTempLabel.setText("Mosfet Temperature");
                     headTempLabel.setText("Head Temperature");
@@ -681,7 +686,8 @@ public class MainFrame extends JFrame {
                     writeTempFeedbackButton.setText("Write");
                     readCurrentFeedbackButton.setText("Read");
                     writeCurrentFeedbackButton.setText("Write");
-                    writeStopButton.setText("Setting");
+                    writeFilterCoefficientButton.setText("Setting");
+                    readFilterCoefficientButton.setText("Read");
                     readBoardTempButton.setText("Read");
                     readMosfetTempButton.setText("Read");
                     readHeadTempButton.setText("Read");
@@ -699,7 +705,7 @@ public class MainFrame extends JFrame {
                     powerAutoReadheadCheckBox.setText("Auto Read");
                     readTimestampButton.setText("Read");
                     writeTimestampButton.setText("Write");
-                    setTitle("Electromagnetic Welding Facility Control V1.2");
+                    setTitle("Electromagnetic Welding Facility Control V1.3");
                     languageSelectButton.setText("简体中文");
                     int index = temperatureUnitComboBox.getSelectedIndex();
                     temperatureUnitComboBox.removeAllItems();
@@ -720,7 +726,7 @@ public class MainFrame extends JFrame {
                     tempFeedbackLabel.setText("温度反馈");
                     currentFeedbackLabel.setText("电流控制");
                     timestampLabel.setText("出厂时间");
-                    stopLabel.setText("停用模式");
+                    filterCoefficientLabel.setText("停用模式");
                     boardTempLabel.setText("主板温度");
                     mosfetTempLabel.setText("MOS温度");
                     headTempLabel.setText("焊头温度");
@@ -755,7 +761,8 @@ public class MainFrame extends JFrame {
                     writeTempFeedbackButton.setText("写入");
                     readCurrentFeedbackButton.setText("读取");
                     writeCurrentFeedbackButton.setText("写入");
-                    writeStopButton.setText("设置");
+                    writeFilterCoefficientButton.setText("写入");
+                    readFilterCoefficientButton.setText("读取");
                     readBoardTempButton.setText("读取");
                     readMosfetTempButton.setText("读取");
                     readHeadTempButton.setText("读取");
@@ -773,7 +780,7 @@ public class MainFrame extends JFrame {
                     powerAutoReadheadCheckBox.setText("自动读取");
                     readTimestampButton.setText("读取");
                     writeTimestampButton.setText("写入");
-                    setTitle("电磁焊接设备控制软件 v1.2");
+                    setTitle("电磁焊接设备控制软件 V1.3");
                     languageSelectButton.setText("English");
                     int index = temperatureUnitComboBox.getSelectedIndex();
                     temperatureUnitComboBox.removeAllItems();
@@ -984,34 +991,6 @@ public class MainFrame extends JFrame {
             }
         });
 
-        readTempFeedbackButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(8, 1);
-            }
-        });
-
-        readCurrentFeedbackButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(9, 1);
-            }
-        });
-
-        readDebugButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(19, 1);
-            }
-        });
-
-        readTimestampButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(11, 2);
-            }
-        });
-
         readBoardTempButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1032,6 +1011,28 @@ public class MainFrame extends JFrame {
                 inverterReadConsumer.accept(6, 1);
             }
         });
+
+        readErrorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                inverterReadConsumer.accept(7, 1);
+            }
+        });
+
+        readFilterCoefficientButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                inverterReadConsumer.accept(10, 1);
+            }
+        });
+
+        readTimestampButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                inverterReadConsumer.accept(11, 2);
+            }
+        });
+
 
         readVoltage1Button.addActionListener(new ActionListener() {
             @Override
@@ -1054,17 +1055,17 @@ public class MainFrame extends JFrame {
             }
         });
 
-        readErrorButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                inverterReadConsumer.accept(7, 1);
-            }
-        });
-
         readSolderTimesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 inverterReadConsumer.accept(17, 2);
+            }
+        });
+
+        readDebugButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                inverterReadConsumer.accept(19, 1);
             }
         });
 
@@ -1146,8 +1147,8 @@ public class MainFrame extends JFrame {
                 case 8:
                     dataString = timestampTextField.getText();
                     break;
-                case 9:
-                    dataString = "170";
+                case 10:
+                    dataString = filterCoefficientTextField.getText();
                     break;
                 case 17:
                     dataString = solderTimesTextField.getText();
@@ -1207,13 +1208,6 @@ public class MainFrame extends JFrame {
                 inverterWriteConsumer.accept(1);
             }
         });
-        //死区占比改电量 todo
-//        writeDeadTimeRatioButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                inverterWriteConsumer.accept(2);
-//            }
-//        });
 
         writeSetCurrentButton.addActionListener(new ActionListener() {
             @Override
@@ -1258,10 +1252,10 @@ public class MainFrame extends JFrame {
             }
         });
 
-        writeStopButton.addActionListener(new ActionListener() {
+        writeFilterCoefficientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inverterWriteConsumer.accept(9);
+                inverterWriteConsumer.accept(10);
             }
         });
 
