@@ -55,11 +55,11 @@ public class MainFrame extends JFrame {
     private byte[] receiveBuff;
     private JLabel inverterAddrLabel = new JLabel();
     private JTextField inverterAddrTextField = new JTextField();
-    //谐振频率
-    private JLabel setResenantFreqLabel = new JLabel();
-    private JTextField resonantFreqTextField = new JTextField();
-    private JButton readResonantFreqButton = new JButton("读取");
-    private JButton writeResonantFreqButton = new JButton("写入");
+    //中心频率
+    private JLabel setCentralFreqLabel = new JLabel();
+    private JTextField centralFreqTextField = new JTextField();
+    private JButton readCentralFreqButton = new JButton("读取");
+    private JButton writeCentralFreqButton = new JButton("写入");
     //焊接能量
     private JLabel powerConsumptionLabel = new JLabel();
     private JTextField powerConsumptionTextField = new JTextField();
@@ -200,16 +200,16 @@ public class MainFrame extends JFrame {
         inverterOperatePanel.add(inverterAddrTextField);
         posY += 25;
 
-        setResenantFreqLabel.setText("谐振频率");
-        setResenantFreqLabel.setForeground(Color.gray);
-        setResenantFreqLabel.setBounds(10, posY, 120, 20);
-        inverterOperatePanel.add(setResenantFreqLabel);
-        resonantFreqTextField.setBounds(150, posY, 60, 20);
-        inverterOperatePanel.add(resonantFreqTextField);
-        readResonantFreqButton.setBounds(220, posY, 80, 20);
-        inverterOperatePanel.add(readResonantFreqButton);
-        writeResonantFreqButton.setBounds(310, posY, 80, 20);
-        inverterOperatePanel.add(writeResonantFreqButton);
+        setCentralFreqLabel.setText("中心频率");
+        setCentralFreqLabel.setForeground(Color.gray);
+        setCentralFreqLabel.setBounds(10, posY, 120, 20);
+        inverterOperatePanel.add(setCentralFreqLabel);
+        centralFreqTextField.setBounds(150, posY, 60, 20);
+        inverterOperatePanel.add(centralFreqTextField);
+        readCentralFreqButton.setBounds(220, posY, 80, 20);
+        inverterOperatePanel.add(readCentralFreqButton);
+        writeCentralFreqButton.setBounds(310, posY, 80, 20);
+        inverterOperatePanel.add(writeCentralFreqButton);
         posY += 25;
 
         powerConsumptionLabel.setText("用电量");
@@ -445,8 +445,8 @@ public class MainFrame extends JFrame {
     }
 
     Consumer<Boolean> consumerButtonDisplay = trueFalse -> {
-        readResonantFreqButton.setEnabled(trueFalse);
-        writeResonantFreqButton.setEnabled(trueFalse);
+        readCentralFreqButton.setEnabled(trueFalse);
+        writeCentralFreqButton.setEnabled(trueFalse);
         writeSetCurrentButton.setEnabled(trueFalse);
         readSetCurrentButton.setEnabled(trueFalse);
         readHeadTempButton.setEnabled(trueFalse);
@@ -526,7 +526,7 @@ public class MainFrame extends JFrame {
                     data |= dataArray[4] & 0xFF;
                     switch (startAddress) {
                         case 1:
-                            resonantFreqTextField.setText(Integer.toString(data) + "KHz");
+                            centralFreqTextField.setText(Integer.toString(data) + "KHz");
                             break;
                         case 2:
                             powerConsumptionTextField.setText(Integer.toString(data) + "J");
@@ -646,7 +646,7 @@ public class MainFrame extends JFrame {
                     serialPortBaudLabel.setText("Baud Rate");
                     inverterAddrLabel.setText("Station No.");
                     inverterOperatePanel.setBorder(BorderFactory.createTitledBorder("Inverter Parameters"));
-                    setResenantFreqLabel.setText("Resonant Frequency");
+                    setCentralFreqLabel.setText("Central Frequency");
                     powerConsumptionLabel.setText("Power Consumption");
                     setCurrentLabel.setText("Set Current");
                     tempFeedbackLabel.setText("Temperature Feedback");
@@ -676,9 +676,9 @@ public class MainFrame extends JFrame {
                             serialPortOpenButton.setText("Open Serial");
                         }
                     }
-                    readResonantFreqButton.setText("Read");
-                    readResonantFreqButton.setText("Read");
-                    writeResonantFreqButton.setText("Write");
+                    readCentralFreqButton.setText("Read");
+                    readCentralFreqButton.setText("Read");
+                    writeCentralFreqButton.setText("Write");
                     readPowerConsumptionButton.setText("Read");
                     readSetCurrentButton.setText("Read");
                     writeSetCurrentButton.setText("Write");
@@ -720,7 +720,7 @@ public class MainFrame extends JFrame {
                     serialPortBaudLabel.setText("波特率");
                     inverterAddrLabel.setText("地址");
                     inverterOperatePanel.setBorder(BorderFactory.createTitledBorder("逆变器参数"));
-                    setResenantFreqLabel.setText("谐振频率");
+                    setCentralFreqLabel.setText("中心频率");
                     powerConsumptionLabel.setText("用电量");
                     setCurrentLabel.setText("设定电流");
                     tempFeedbackLabel.setText("温度反馈");
@@ -751,9 +751,9 @@ public class MainFrame extends JFrame {
                         }
                     }
 
-                    readResonantFreqButton.setText("读取");
-                    readResonantFreqButton.setText("读取");
-                    writeResonantFreqButton.setText("写入");
+                    readCentralFreqButton.setText("读取");
+                    readCentralFreqButton.setText("读取");
+                    writeCentralFreqButton.setText("写入");
                     readPowerConsumptionButton.setText("读取");
                     readSetCurrentButton.setText("读取");
                     writeSetCurrentButton.setText("写入");
@@ -970,7 +970,7 @@ public class MainFrame extends JFrame {
             startAddress = start;
         };
 
-        readResonantFreqButton.addActionListener(new ActionListener() {
+        readCentralFreqButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 inverterReadConsumer.accept(1, 1);
@@ -1124,7 +1124,7 @@ public class MainFrame extends JFrame {
             String timestampString = null;
             switch (start) {
                 case 1:
-                    dataString = resonantFreqTextField.getText().replaceAll("(?i)khz", "");
+                    dataString = centralFreqTextField.getText().replaceAll("(?i)khz", "");
                     break;
                 case 2:
                     dataString = powerConsumptionTextField.getText();
@@ -1202,7 +1202,7 @@ public class MainFrame extends JFrame {
             SerialCommTools.sendData(serialport, command, languageSelectButton.getText());
         };
 
-        writeResonantFreqButton.addActionListener(new ActionListener() {
+        writeCentralFreqButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 inverterWriteConsumer.accept(1);
